@@ -48,6 +48,8 @@ if(os.path.exists(deps_dir)):
 	print("\nMIVisionX Dependencies Installed\n")
 else:
 	print("\nMIVisionX Dependencies Installation\n")
+	cmd='sudo -S apt-get -y --allow-unauthenticated install cmake git wget unzip'
+	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	os.system('(cd '+setupDir+'; mkdir deps)');
 	os.system('(cd '+deps_dir+'; git clone https://github.com/RadeonOpenCompute/rocm-cmake.git )');
 	os.system('(cd '+deps_dir+'; git clone https://github.com/ROCmSoftwarePlatform/MIOpenGEMM.git )');
