@@ -1,10 +1,10 @@
 __author__      = "Kiriti Nagesh Gowda"
-__copyright__   = "Copyright 2018, AMD NeuralNet Model Profiler"
+__copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "0.9.0"
+__version__     = "0.9.5"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
-__status__      = "Alpha"
+__status__      = "beta"
 
 import os
 import getopt
@@ -29,7 +29,7 @@ for opt, arg in opts:
 if sudoPassword == '':
     print('Invalid command line arguments.\n \t\t\t\t-s [sudo password - required]\n '\
                                             '\t\t\t\t-d [setup directory - optional]\n '\
-                                            '\t\t\t\t-m [MIOpen Version - optional (default:1.3.0)]\n')
+                                            '\t\t\t\t-m [MIOpen Version - optional (default:1.5.0)]\n')
     exit()
 
 if setupDir == '':
@@ -43,11 +43,11 @@ if MIOpenVersion == '':
 from subprocess import call
 deps_dir = os.path.expanduser(setupDir_deps)
 
-# AMDOVX setup
+# MIVisionX setup
 if(os.path.exists(deps_dir)):
-	print("\nAMDOVX Dependencies Installed\n")
+	print("\nMIVisionX Dependencies Installed\n")
 else:
-	print("\nAMDOVX Dependencies Installation\n")
+	print("\nMIVisionX Dependencies Installation\n")
 	os.system('(cd '+setupDir+'; mkdir deps)');
 	os.system('(cd '+deps_dir+'; git clone https://github.com/RadeonOpenCompute/rocm-cmake.git )');
 	os.system('(cd '+deps_dir+'; git clone https://github.com/ROCmSoftwarePlatform/MIOpenGEMM.git )');
@@ -113,5 +113,5 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/build/OpenCV; sudo -S ldconfig )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='sudo -S apt-get -y --allow-unauthenticated install inxi aha'
+	cmd='sudo -S apt-get -y --allow-unauthenticated install inxi aha libboost-python-dev build-essential python-matplotlib python-numpy python-pil python-scipy python-skimage cython'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
