@@ -1,10 +1,10 @@
 __author__      = "Kiriti Nagesh Gowda"
-__copyright__   = "Copyright 2018, AMD NeuralNet Model Profiler"
+__copyright__   = "Copyright 2018, AMD MIVisionX Profiler"
 __license__     = "MIT"
-__version__     = "0.9.0"
+__version__     = "0.9.5"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
-__status__      = "Alpha"
+__status__      = "beta"
 
 import os
 import getopt
@@ -50,9 +50,9 @@ if buildDir == '':
     exit()
 
 if buildDir == '':
-	buildDir_AMDOVX = '~/AMDOVX'
+	buildDir_MIVisionX = '~/MIVisionX'
 else:
-	buildDir_AMDOVX = buildDir+'AMDOVX'
+	buildDir_MIVisionX = buildDir+'MIVisionX'
 
 if profileLevel == 0:
 	profileLevel = 7
@@ -61,11 +61,11 @@ if profileMode == 0:
 	profileMode = 6
 
 # Bring CaffeModels
-caffeModels_dir = os.path.expanduser(buildDir_AMDOVX+'/caffeModels')
+caffeModels_dir = os.path.expanduser(buildDir_MIVisionX+'/caffeModels')
 if(os.path.exists(caffeModels_dir)):
 	print("\nCaffeModel Folder Exist\n")
 else:
-	os.system('(cd '+buildDir_AMDOVX+'; scp -r client@amdovx-file-server:~/caffeModels . )');
+	os.system('(cd '+buildDir_MIVisionX+'; scp -r client@amdovx-file-server:~/caffeModels . )');
 	if(os.path.exists(caffeModels_dir)):
 		print("\nCaffeModel Retrived from the amdovx-file-server\n")
 	else:
@@ -74,11 +74,11 @@ else:
 
 
 # run caffe models
-develop_dir = os.path.expanduser(buildDir_AMDOVX+'/develop')
+develop_dir = os.path.expanduser(buildDir_MIVisionX+'/develop')
 if(os.path.exists(develop_dir)):
-	os.system('(cd '+buildDir_AMDOVX+'; rm -rf develop)');
+	os.system('(cd '+buildDir_MIVisionX+'; rm -rf develop)');
 
-os.system('(cd '+buildDir_AMDOVX+'; mkdir develop)');
+os.system('(cd '+buildDir_MIVisionX+'; mkdir develop)');
 
 print("\nCaffe Models access ..\n")
 for i in range(len(caffeModelConfig)):
