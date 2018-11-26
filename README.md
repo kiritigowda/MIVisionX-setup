@@ -1,16 +1,12 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-This project contains scripts to setup, build, and profile AMD Radeon MIVision. The open source GitHub project can be found at [amdovx-modules](https://github.com/GPUOpen-ProfessionalCompute-Libraries/amdovx-modules)
+This project contains scripts to setup, build, and profile AMD Radeon MIVisionX. The open source GitHub project can be found at [amdovx-modules](https://github.com/GPUOpen-ProfessionalCompute-Libraries/amdovx-modules)
 
 
 ## Prerequisites for running the Profiler
 1. ubuntu 16.04/18.04
-2. [rocm supported hardware](https://rocm.github.io/hardware.html)
-3. [rocm](https://github.com/RadeonOpenCompute/ROCm#installing-from-amd-rocm-repositories)
-4. Install cmake, wget, unzip, and git
-````
-sudo apt-get install cmake git wget unzip
-````
+2. [ROCm supported hardware](https://rocm.github.io/hardware.html)
+3. [ROCm](https://github.com/RadeonOpenCompute/ROCm#installing-from-amd-rocm-repositories)
 
 ## scripts 
 This folder has the following python scripts
@@ -36,7 +32,7 @@ python MIVision-build.py -s [sudo password] -d [build directory - optional]
 usage:
 
 ````
-python MIVision-profile.py -d [build directory - required] -l [profile level - optional (1-8, default:7)] -m [Profile Mode - optional (1-6, default:6)]
+python MIVision-profile.py -d [build directory - required] -l [profile level - optional (1-8, default:7)] -m [Profile Mode - optional (1-6, default:2)]
 ```` 
 
 4. **MIVision-generatePlatformReport.py** - This Scripts generates the platfrom report for the system.
