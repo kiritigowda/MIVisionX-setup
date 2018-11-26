@@ -129,7 +129,7 @@ if profileMode == 1:
 
 # run caffe2nnir2openvx no fuse flow
 if profileMode == 2:
-	modelCompilerScripts_dir = os.path.expanduser(buildDir_AMDOVX+'/amdovx-modules/utils/model_compiler/python')
+	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python')
 	for i in range(len(caffeModelConfig)):
 		modelName, channel, height, width = caffeModelConfig[i]
 		print "\n caffe2nnir2openvx --",modelName,"\n"
@@ -172,7 +172,7 @@ if profileMode == 2:
 
 # run caffe2nnir2openvx with fuse flow
 if profileMode == 3:
-	modelCompilerScripts_dir = os.path.expanduser(buildDir_AMDOVX+'/amdovx-modules/utils/model_compiler/python')
+	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python')
 	for i in range(len(caffeModelConfig)):
 		modelName, channel, height, width = caffeModelConfig[i]
 		print "\n caffe2nnir2openvx --",modelName,"\n"
@@ -217,7 +217,7 @@ if profileMode == 3:
 	
 # run caffe2nnir2openvx with fuse flow
 if profileMode == 4:
-	modelCompilerScripts_dir = os.path.expanduser(buildDir_AMDOVX+'/amdovx-modules/utils/model_compiler/python')
+	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python')
 	for i in range(len(caffeModelConfig)):
 		modelName, channel, height, width = caffeModelConfig[i]
 		print "\n caffe2nnir2openvx --",modelName,"\n"
