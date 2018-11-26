@@ -1,11 +1,11 @@
 __author__      = "Kiriti Nagesh Gowda"
-__copyright__   = "Copyright 2018, AMD NeuralNet Model Profiler"
+__copyright__   = "Copyright 2018, AMD MIVision Generate Full Report"
 __credits__     = ["Aguren, Derrick"]
 __license__     = "MIT"
-__version__     = "0.9.0"
+__version__     = "0.9.5"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
-__status__      = "Alpha"
+__status__      = "beta"
 
 import os
 import getopt
@@ -28,11 +28,11 @@ if buildDir == '':
     exit()
 
 if buildDir == '':
-    buildDir_AMDOVX = '~/AMDOVX'
+    buildDir_MIVisionX = '~/MIVisionX'
 else:
-    buildDir_AMDOVX = buildDir+'AMDOVX'
+    buildDir_MIVisionX = buildDir+'MIVisionX'
 
-AMDOVX_dir = os.path.expanduser(buildDir_AMDOVX)
+AMDOVX_dir = os.path.expanduser(buildDir_MIVisionX)
 
 def shell(cmd):
 
@@ -73,15 +73,15 @@ if __name__ == "__main__":
 
     # generate annie .so
     print("\nGenerating .so File...\n")
-    logOutput = shell ('mkdir '+buildDir_AMDOVX+'/buildLog')
-    logOutput = shell ('cd '+buildDir_AMDOVX+'/buildLog')
-    logOutput = shell ('python '+buildDir_AMDOVX+'/amdovx-modules/utils/model_compiler/python/caffe2nnir.py '+buildDir_AMDOVX+'/caffeModels/resnet50/resnet50.caffemodel '+buildDir_AMDOVX+'/buildLog/resnet50 --input-dims 1,3,224,224')
-    logOutput = shell ('python '+buildDir_AMDOVX+'/amdovx-modules/utils/model_compiler/python/nnir2openvx.py '+buildDir_AMDOVX+'/buildLog/resnet50 '+buildDir_AMDOVX+'/buildLog/resnet50-build')
-    logOutput = shell ('(cd '+buildDir_AMDOVX+'/buildLog/resnet50-build/;cmake .;make)')
+    logOutput = shell ('mkdir '+buildDir_MIVisionX+'/buildLog')
+    logOutput = shell ('cd '+buildDir_MIVisionX+'/buildLog')
+    logOutput = shell ('python '+buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python/caffe2nnir.py '+buildDir_MIVisionX+'/caffeModels/resnet50/resnet50.caffemodel '+buildDir_MIVisionX+'/buildLog/resnet50 --input-dims 1,3,224,224')
+    logOutput = shell ('python '+buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python/nnir2openvx.py '+buildDir_MIVisionX+'/buildLog/resnet50 '+buildDir_MIVisionX+'/buildLog/resnet50-build')
+    logOutput = shell ('(cd '+buildDir_MIVisionX+'/buildLog/resnet50-build/;cmake .;make)')
 
     # report configuration
     out_filename_time = False
-    path_to_so = buildDir_AMDOVX+'/buildLog/resnet50-build/libannmodule.so'
+    path_to_so = buildDir_MIVisionX+'/buildLog/resnet50-build/libannmodule.so'
 
     # get data
 
@@ -130,7 +130,7 @@ if __name__ == "__main__":
         f.write("\n\nBenchmark Report\n")
         f.write("--------\n")
         f.write("\n")
-        with open(buildDir_AMDOVX+'/develop/caffe2nnir2openvx_noFuse_profile.md') as benchmarkFile:
+        with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_noFuse_profile.md') as benchmarkFile:
             for line in benchmarkFile:
                 f.write("%s" % line)
 
