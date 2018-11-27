@@ -35,7 +35,7 @@ if sudoPassword == '':
 if setupDir == '':
 	setupDir_deps = '~/deps'
 else:
-	setupDir_deps = setupDir+'deps'
+	setupDir_deps = setupDir+'/deps'
 
 if MIOpenVersion == '':
 	MIOpenVersion = '1.5.0'
