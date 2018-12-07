@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "0.9.5"
+__version__     = "0.9.9"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "beta"
@@ -29,7 +29,7 @@ for opt, arg in opts:
 if sudoPassword == '':
     print('Invalid command line arguments.\n \t\t\t\t-s [sudo password - required]\n '\
                                             '\t\t\t\t-d [setup directory - optional]\n '\
-                                            '\t\t\t\t-m [MIOpen Version - optional (default:1.5.0)]\n')
+                                            '\t\t\t\t-m [MIOpen Version - optional (default:1.6.0)]\n')
     exit()
 
 if setupDir == '':
@@ -38,7 +38,7 @@ else:
 	setupDir_deps = setupDir+'/deps'
 
 if MIOpenVersion == '':
-	MIOpenVersion = '1.5.0'
+	MIOpenVersion = '1.6.0'
 
 from subprocess import call
 deps_dir = os.path.expanduser(setupDir_deps)
@@ -115,5 +115,9 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/build/OpenCV; sudo -S ldconfig )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='sudo -S apt-get -y --allow-unauthenticated install inxi aha libboost-python-dev build-essential python-matplotlib python-numpy python-pil python-scipy python-skimage cython'
+	cmd='sudo -S apt-get -y --allow-unauthenticated install inxi aha libboost-python-dev build-essential'
+	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
+	cmd='sudo -S apt-get -y --allow-unauthenticated install python-matplotlib python-numpy python-pil python-scipy python-skimage cython'
+	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
+	cmd='sudo -S apt-get -y --allow-unauthenticated install qt5-default qtcreator'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
