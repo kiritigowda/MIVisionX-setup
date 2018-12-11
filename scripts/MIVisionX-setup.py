@@ -45,9 +45,15 @@ if MIOpenVersion == '':
 	MIOpenVersion = '1.6.0'
 
 linuxSystemInstall_check = '--nogpgcheck'
-if linuxSystemInstall == '':
+linuxCMake = 'cmake3'
+if linuxSystemInstall == '' or linuxSystemInstall == 'apt-get':
 	linuxSystemInstall = 'apt-get'
 	linuxSystemInstall_check = '--allow-unauthenticated'
+	linuxCMake = 'cmake'
+else:
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3'
+	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
+
 
 from subprocess import call
 deps_dir = os.path.expanduser(setupDir_deps)
@@ -70,19 +76,19 @@ else:
 	os.system('(cd '+deps_dir+'; unzip 3.3.0.zip )');
 	os.system('(cd '+deps_dir+'; mkdir build )');
 	os.system('(cd '+deps_dir+'/build; mkdir rocm-cmake MIOpenGEMM MIOpen OpenCV )');
-	os.system('(cd '+deps_dir+'/build/rocm-cmake; cmake ../../rocm-cmake )');
+	os.system('(cd '+deps_dir+'/build/rocm-cmake; '+linuxCMake+' ../../rocm-cmake )');
 	os.system('(cd '+deps_dir+'/build/rocm-cmake; make -j8 )');
 	cmd='(cd '+deps_dir+'/build/rocm-cmake; sudo -S make install )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; cmake ../../MIOpenGEMM )');
+	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; '+linuxCMake+' ../../MIOpenGEMM )');
 	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; make -j8 )');
 	cmd='(cd '+deps_dir+'/build/MIOpenGEMM; sudo -S make install )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='(cd '+deps_dir+'/MIOpen-'+MIOpenVersion+'; sudo -S cmake -P install_deps.cmake )'
+	cmd='(cd '+deps_dir+'/MIOpen-'+MIOpenVersion+'; sudo -S '+linuxCMake+' -P install_deps.cmake )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/build/MIOpen; sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libssl-dev libboost-dev libboost-system-dev libboost-filesystem-dev  )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	os.system('(cd '+deps_dir+'/build/MIOpen; cmake -DMIOPEN_BACKEND=OpenCL ../../MIOpen-'+MIOpenVersion+' )');
+	os.system('(cd '+deps_dir+'/build/MIOpen; '+linuxCMake+' -DMIOPEN_BACKEND=OpenCL ../../MIOpen-'+MIOpenVersion+' )');
 	os.system('(cd '+deps_dir+'/build/MIOpen; make -j8 )');
 	os.system('(cd '+deps_dir+'/build/MIOpen; make MIOpenDriver )');
 	cmd='(cd '+deps_dir+'/build/MIOpen; sudo -S make install )'
@@ -114,7 +120,7 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	os.system('(cd '+deps_dir+'/build/OpenCV; cmake -DWITH_OPENCL=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF -DWITH_VA_INTEL=OFF -DWITH_OPENCL_SVM=OFF ../../opencv-3.3.0 )');
+	os.system('(cd '+deps_dir+'/build/OpenCV; '+linuxCMake+' -DWITH_OPENCL=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF -DWITH_VA_INTEL=OFF -DWITH_OPENCL_SVM=OFF ../../opencv-3.3.0 )');
 	os.system('(cd '+deps_dir+'/build/OpenCV; make -j8 )');
 	cmd='(cd '+deps_dir+'/build/OpenCV; sudo -S make install )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
