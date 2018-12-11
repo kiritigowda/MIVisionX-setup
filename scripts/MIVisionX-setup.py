@@ -12,7 +12,7 @@ import sys
 import subprocess
  
 
-opts, args = getopt.getopt(sys.argv[1:], 's:d:m:')
+opts, args = getopt.getopt(sys.argv[1:], 's:d:l:m:')
  
 sudoPassword = ''
 setupDir = ''
