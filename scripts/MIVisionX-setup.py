@@ -44,8 +44,10 @@ else:
 if MIOpenVersion == '':
 	MIOpenVersion = '1.6.0'
 
+linuxSystemInstall_check = '--nogpgcheck'
 if linuxSystemInstall == '':
 	linuxSystemInstall = 'apt-get'
+	linuxSystemInstall_check = '--allow-unauthenticated'
 
 from subprocess import call
 deps_dir = os.path.expanduser(setupDir_deps)
@@ -55,7 +57,7 @@ if(os.path.exists(deps_dir)):
 	print("\nMIVisionX Dependencies Installed\n")
 else:
 	print("\nMIVisionX Dependencies Installation\n")
-	cmd='sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install cmake git wget unzip'
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake git wget unzip'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	os.system('(cd '+setupDir+'; mkdir deps)');
 	os.system('(cd '+deps_dir+'; git clone https://github.com/RadeonOpenCompute/rocm-cmake.git )');
@@ -78,7 +80,7 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/MIOpen-'+MIOpenVersion+'; sudo -S cmake -P install_deps.cmake )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='(cd '+deps_dir+'/build/MIOpen; sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install libssl-dev libboost-dev libboost-system-dev libboost-filesystem-dev  )'
+	cmd='(cd '+deps_dir+'/build/MIOpen; sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libssl-dev libboost-dev libboost-system-dev libboost-filesystem-dev  )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	os.system('(cd '+deps_dir+'/build/MIOpen; cmake -DMIOPEN_BACKEND=OpenCL ../../MIOpen-'+MIOpenVersion+' )');
 	os.system('(cd '+deps_dir+'/build/MIOpen; make -j8 )');
@@ -89,7 +91,7 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/build/MIOpen; sudo -S apt autoclean )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install autoconf automake libtool curl make g++ unzip )'
+	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake libtool curl make g++ unzip )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S apt autoremove )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
@@ -104,7 +106,7 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S ldconfig )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install python-pip )'
+	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install python-pip )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S yes | pip install protobuf )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
@@ -112,9 +114,9 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/protobuf-3.5.2; sudo -S yes | pip install numpy )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev'
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev'
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	os.system('(cd '+deps_dir+'/build/OpenCV; cmake -DWITH_OPENCL=OFF -DWITH_OPENCLAMDFFT=OFF -DWITH_OPENCLAMDBLAS=OFF -DWITH_VA_INTEL=OFF -DWITH_OPENCL_SVM=OFF ../../opencv-3.3.0 )');
 	os.system('(cd '+deps_dir+'/build/OpenCV; make -j8 )');
@@ -122,9 +124,9 @@ else:
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 	cmd='(cd '+deps_dir+'/build/OpenCV; sudo -S ldconfig )'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install inxi aha libboost-python-dev build-essential'
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install inxi aha libboost-python-dev build-essential'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install python-matplotlib python-numpy python-pil python-scipy python-skimage cython'
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install python-matplotlib python-numpy python-pil python-scipy python-skimage cython'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
-	cmd='sudo -S '+linuxSystemInstall+' -y --allow-unauthenticated install qt5-default qtcreator'
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install qt5-default qtcreator'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
