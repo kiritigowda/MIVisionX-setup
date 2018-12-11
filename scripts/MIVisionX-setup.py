@@ -10,6 +10,7 @@ import os
 import getopt
 import sys
 import subprocess
+from subprocess import call
  
 
 opts, args = getopt.getopt(sys.argv[1:], 's:d:l:m:')
@@ -54,8 +55,6 @@ else:
 	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 
-
-from subprocess import call
 deps_dir = os.path.expanduser(setupDir_deps)
 
 # MIVisionX setup
