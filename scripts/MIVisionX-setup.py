@@ -52,7 +52,7 @@ if linuxSystemInstall == '' or linuxSystemInstall == 'apt-get':
 	linuxSystemInstall_check = '--allow-unauthenticated'
 	linuxCMake = 'cmake'
 else:
-	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install "Development Tools" cmake3  boost boost-thread boost-devel openssl-devel'
+	cmd='sudo -S '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3 boost boost-thread boost-devel openssl-devel'
 	call('echo {} | {}'.format(sudoPassword, cmd), shell=True)
 
 deps_dir = os.path.expanduser(setupDir_deps)
