@@ -26,7 +26,7 @@ for opt, arg in opts:
     	setupDir = arg
     elif opt =='-m':
     	MIOpenVersion = arg
-    elif opt == '-l'
+    elif opt =='-l':
     	linuxSystemInstall = arg
 
 if sudoPassword == '':
