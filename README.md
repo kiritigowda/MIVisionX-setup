@@ -6,14 +6,14 @@ This project contains scripts to setup, build, and profile AMD Radeon MIVisionX.
 
 
 ## Prerequisites for running the scripts
-1. ubuntu 16.04/18.04
+1. Ubuntu `16.04`/`18.04` or Centos `7.5`/`7.6`
 2. [ROCm supported hardware](https://rocm.github.io/hardware.html)
 3. [ROCm](https://github.com/RadeonOpenCompute/ROCm#installing-from-amd-rocm-repositories)
 
 ## scripts 
 This folder has the following python scripts
 
-1. **MIVisionX-setup.py** - This scipts builds all the prerequisites required by MIVisionX. The setup script creates a deps folder and installs all the prerequisites, this script only needs to be executed once. If -d option for directory is not given the script will install deps folder in '~/' directory by default, else in the user specified folder.
+1. **MIVisionX-setup.py** - This script builds all the prerequisites required by MIVisionX. The setup script creates a deps folder and installs all the prerequisites, this script only needs to be executed once. If -d option for the directory is not given the script will install deps folder in '~/' directory by default, else in the user-specified folder.
 
 usage:
 
@@ -21,7 +21,7 @@ usage:
 python MIVision-setup.py -s [sudo password - required] -d [setup directory - optional]
 ```` 
 
-2. **MIVisionX-build.py** - This script clones the latest MIVisionX from github, builds and installs the project. If the -d build directory is not given the script creates a MIVisionX folder in the home/'~/' directory by default, else in the user specified folder.
+2. **MIVisionX-build.py** - This script clones the latest MIVisionX from GitHub, builds and installs the project. If the -d build directory is not given the script creates a MIVisionX folder in the home/'~/' directory by default, else in the user-specified folder.
 
 usage:
 
