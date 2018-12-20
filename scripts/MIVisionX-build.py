@@ -46,7 +46,7 @@ else:
 
 # AMDOVX Work Flow
 buildMain_dir = os.path.expanduser(buildDir_MIVisionX)
-buildGIT_dir = os.path.expanduser(buildDir_MIVisionX+'/amdovx-modules')
+buildGIT_dir = os.path.expanduser(buildDir_MIVisionX+'/MIVisionX')
 buildMake_dir = os.path.expanduser(buildDir_MIVisionX+'/build')
 if(os.path.exists(buildGIT_dir)):
 	print("\nGit Folder Exist\n")
