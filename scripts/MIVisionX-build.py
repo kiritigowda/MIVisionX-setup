@@ -54,7 +54,7 @@ if(os.path.exists(buildGIT_dir)):
 else:
 	os.system('rm -rf '+buildMain_dir);
 	os.system('(cd ; mkdir '+buildMain_dir+')');
-	os.system('(cd '+buildMain_dir+'; git clone --recursive -b develop http://github.com/GPUOpen-ProfessionalCompute-Libraries/amdovx-modules )');
+	os.system('(cd '+buildMain_dir+'; git clone --recursive http://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX )');
 	os.system('(cd '+buildGIT_dir+'; git submodule init; git submodule update --recursive  )');
 
 # AMDOVX Build
@@ -64,7 +64,7 @@ if(os.path.exists(buildMake_dir)):
 else:
 	os.system('(cd '+buildMain_dir+'; mkdir build)');
 
-os.system('(cd '+buildMake_dir+'; '+linuxCMake+' -DCMAKE_BUILD_TYPE=Release ../amdovx-modules )');
+os.system('(cd '+buildMake_dir+'; '+linuxCMake+' -DCMAKE_BUILD_TYPE=Release ../MIVisionX )');
 os.system('(cd '+buildMake_dir+'; make -j8 )');
 from subprocess import call
 cmd='(cd '+buildMake_dir+'; sudo -S make install )'
