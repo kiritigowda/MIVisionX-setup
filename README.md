@@ -2,7 +2,7 @@
 
 # MIVisionX
 
-This project contains scripts to setup, build, and profile AMD Radeon MIVisionX. The open source GitHub project can be found at [MIVisionX](https://github.com/GPUOpen-ProfessionalCompute-Libraries/amdovx-modules)
+This project contains scripts to setup, build, and profile AMD Radeon MIVisionX. The open source GitHub project can be found at [MIVisionX](https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX)
 
 
 ## Prerequisites for running the scripts
@@ -18,7 +18,10 @@ This folder has the following python scripts
 usage:
 
 ````
-python MIVision-setup.py -s [sudo password - required] -d [setup directory - optional]
+python mivisionx-setup/scripts/MIVisionX-setup.py -s [sudo password - required]
+                                                  -d [setup directory - optional]
+                                                  -l [Linux system install - optional (default:apt-get options:apt-get/yum)]
+                                                  -m [MIOpen Version - optional (default:1.6.0)]
 ```` 
 
 2. **MIVisionX-build.py** - This script clones the latest MIVisionX from GitHub, builds and installs the project. If the -d build directory is not given the script creates a MIVisionX folder in the home/'~/' directory by default, else in the user-specified folder.
@@ -26,15 +29,22 @@ python MIVision-setup.py -s [sudo password - required] -d [setup directory - opt
 usage:
 
 ````
-python MIVision-build.py -s [sudo password - required] -d [build directory - optional]
+python mivisionx-setup/scripts/MIVisionX-build.py   -s [sudo password - required]
+                                                    -l [Linux system cmake - optional (default:cmake options:cmake/cmake3)]
+                                                    -d [build directory - optional]
 ```` 
+
+*Note* - `The steps below are only for developers with access to AMD developer server`
 
 3. **MIVisionX-profile.py** - This script downloads the caffe .models & .prototxt from a remote file server and runs every model with different batch sizes and dumps an output.log file, profile.csv & profile.txt. The build directory should be the same director passed to the MIVision-build.py script. If no directory was given, pass '~/' for the directory option. 
 
 usage:
 
 ````
-python MIVision-profile.py -d [build directory - required] -l [profile level - optional (1-8, default:7)] -m [Profile Mode - optional (1-6, default:2)]
+python MIVision-profile.py  -d [build directory - required]
+                            -l [profile level - optional (level 1-8, default:7)]
+                            -m [profile mode - optional (level 1-6, default:2)]
+                            -f [MIOPEN_FIND_ENFORCE mode - optional (level 1-5, default:1)]
 ```` 
 
 4. **MIVisionX-generatePlatformReport.py** - This Scripts generates the platfrom report for the system.
