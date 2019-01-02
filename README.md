@@ -34,7 +34,7 @@ python mivisionx-setup/scripts/MIVisionX-build.py   -s [sudo password - required
                                                     -d [build directory - optional]
 ```` 
 
-*Note* - `The steps below are only for developers with access to AMD developer server`
+**Note** - `The steps below are only for developers with access to AMD developer server`
 
 3. **MIVisionX-profile.py** - This script downloads the caffe .models & .prototxt from a remote file server and runs every model with different batch sizes and dumps an output.log file, profile.csv & profile.txt. The build directory should be the same director passed to the MIVision-build.py script. If no directory was given, pass '~/' for the directory option. 
 
