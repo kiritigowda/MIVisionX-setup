@@ -18,10 +18,10 @@ This folder has the following python scripts
 usage:
 
 ````
-python mivisionx-setup/scripts/MIVisionX-setup.py -s [sudo password - required]
-                                                  -d [setup directory - optional]
-                                                  -l [Linux system install - optional (default:apt-get options:apt-get/yum)]
-                                                  -m [MIOpen Version - optional (default:1.6.0)]
+python scripts/MIVisionX-setup.py -s [sudo password - required]
+                                  -d [setup directory - optional]
+                                  -l [Linux system install - optional (default:apt-get options:apt-get/yum)]
+                                  -m [MIOpen Version - optional (default:1.6.0)]
 ```` 
 
 2. **MIVisionX-build.py** - This script clones the latest MIVisionX from GitHub, builds and installs the project. If the -d build directory is not given the script creates a MIVisionX folder in the home/'~/' directory by default, else in the user-specified folder.
@@ -29,9 +29,9 @@ python mivisionx-setup/scripts/MIVisionX-setup.py -s [sudo password - required]
 usage:
 
 ````
-python mivisionx-setup/scripts/MIVisionX-build.py   -s [sudo password - required]
-                                                    -l [Linux system cmake - optional (default:cmake options:cmake/cmake3)]
-                                                    -d [build directory - optional]
+python scripts/MIVisionX-build.py   -s [sudo password - required]
+                                    -l [Linux system cmake - optional (default:cmake options:cmake/cmake3)]
+                                    -d [build directory - optional]
 ```` 
 
 **Note** - `The steps below are only for developers with access to AMD developer server`
@@ -41,10 +41,10 @@ python mivisionx-setup/scripts/MIVisionX-build.py   -s [sudo password - required
 usage:
 
 ````
-python MIVision-profile.py  -d [build directory - required]
-                            -l [profile level - optional (level 1-8, default:7)]
-                            -m [profile mode - optional (level 1-6, default:2)]
-                            -f [MIOPEN_FIND_ENFORCE mode - optional (level 1-5, default:1)]
+python scripts/MIVision-profile.py  -d [build directory - required]
+                                    -l [profile level - optional (level 1-8, default:7)]
+                                    -m [profile mode - optional (level 1-6, default:2)]
+                                    -f [MIOPEN_FIND_ENFORCE mode - optional (level 1-5, default:1)]
 ```` 
 
 4. **MIVisionX-generatePlatformReport.py** - This Scripts generates the platfrom report for the system.
@@ -52,7 +52,7 @@ python MIVision-profile.py  -d [build directory - required]
 usage:
 
 ````
-python MIVision-generatePlatformReport.py -d [build directory - required]
+python scripts/MIVision-generatePlatformReport.py -d [build directory - required]
 ```` 
 
 5. **MIVisionX-generateFullReport.py** - This Scripts generates the platfrom report & benchmark reports for the system.
@@ -60,7 +60,7 @@ python MIVision-generatePlatformReport.py -d [build directory - required]
 usage:
 
 ````
-python MIVision-generateFullReport.py -d [build directory - required]
+python scripts/MIVision-generateFullReport.py -d [build directory - required]
 ```` 
 
 ## outputs
