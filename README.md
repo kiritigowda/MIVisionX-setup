@@ -4,37 +4,36 @@
 
 This project contains scripts to setup, build, and profile AMD Radeon MIVisionX. The open source GitHub project can be found at [MIVisionX](https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX)
 
+For convenience of the developer, we here provide the scripts which will install all the dependencies required by this project and clone the project from GitHub to build and install MIVisionX on your system.
 
-## Prerequisites for running the scripts
-1. Ubuntu `16.04`/`18.04` or Centos `7.5`/`7.6`
+## Prerequisites for running the script
+1. Ubuntu `16.04`/`18.04` or CentOS `7.5`/`7.6`
 2. [ROCm supported hardware](https://rocm.github.io/hardware.html)
 3. [ROCm](https://github.com/RadeonOpenCompute/ROCm#installing-from-amd-rocm-repositories)
 
 ## scripts 
 This folder has the following python scripts
 
-1. **MIVisionX-setup.py** - This script builds all the prerequisites required by MIVisionX. The setup script creates a deps folder and installs all the prerequisites, this script only needs to be executed once. If -d option for the directory is not given the script will install deps folder in '~/' directory by default, else in the user-specified folder.
+1. **MIVisionX-setup.py** builds all the prerequisites required by MIVisionX. The setup script creates a deps folder and installs all the prerequisites, this script only needs to be executed once. If directory option is not given, the script will install deps folder in the home directory(~/) by default, else in the user specified location.
 
-usage:
-
+**usage:**
 ````
-python scripts/MIVisionX-setup.py -s [sudo password - required]
-                                  -d [setup directory - optional]
-                                  -l [Linux system install - optional (default:apt-get options:apt-get/yum)]
-                                  -m [MIOpen Version - optional (default:1.6.0)]
-```` 
+python MIVisionX-setup.py --directory [setup directory - optional]
+                          --installer [Package management tool - optional (default:apt-get) [options: Ubuntu:apt-get;CentOS:yum]]
+                          --miopen    [MIOpen Version - optional (default:1.7.0)]      
+````
+**Note:** use `--installer yum` for CentOS
 
 2. **MIVisionX-build.py** - This script clones the latest MIVisionX from GitHub, builds and installs the project. If the -d build directory is not given the script creates a MIVisionX folder in the home/'~/' directory by default, else in the user-specified folder.
 
-usage:
-
+**usage:**
 ````
 python scripts/MIVisionX-build.py   -s [sudo password - required]
                                     -l [Linux system cmake - optional (default:cmake options:cmake/cmake3)]
                                     -d [build directory - optional]
 ```` 
 
-**Note** - `The steps below are only for developers with access to AMD developer server`
+## **Note** - `The steps below are only for developers with access to AMD developer server`
 
 3. **MIVisionX-profile.py** - This script downloads the caffe .models & .prototxt from a remote file server and runs every model with different batch sizes and dumps an output.log file, profile.csv & profile.txt. The build directory should be the same director passed to the MIVision-build.py script. If no directory was given, pass '~/' for the directory option. 
 
