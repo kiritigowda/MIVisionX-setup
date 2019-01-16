@@ -28,10 +28,10 @@ python MIVisionX-setup.py --directory [setup directory - optional]
 
 **usage:**
 ````
-python scripts/MIVisionX-build.py   -s [sudo password - required]
-                                    -l [Linux system cmake - optional (default:cmake options:cmake/cmake3)]
-                                    -d [build directory - optional]
-```` 
+python MIVisionX-build.py --directory [setup directory - optional]
+                          --cmake     [Linux cmake - optional (default:cmake) [options:Ubuntu - cmake; CentOS - cmake3]]  
+````
+**Note:** use `--cmake cmake3` for CentOS
 
 ## **Note** - `The steps below are only for developers with access to AMD developer server`
 
