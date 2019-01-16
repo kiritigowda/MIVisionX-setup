@@ -129,7 +129,7 @@ if profileMode == 1:
 
 # run caffe2nnir2openvx no fuse flow
 if profileMode == 2:
-	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python')
+	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/MIVisionX/model_compiler/python')
 	for i in range(len(caffeModelConfig)):
 		modelName, channel, height, width = caffeModelConfig[i]
 		print "\n caffe2nnir2openvx --",modelName,"\n"
@@ -138,8 +138,8 @@ if profileMode == 2:
 			print "\n",modelName," - Batch size ", x
 			x = str(x)
 			os.system('(cd '+develop_dir+'/'+modelName+'; mkdir nnir_build_'+x+')');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe2nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir2openvx.py . .)');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe_to_nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_to_openvx.py . .)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; cmake .; make)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; echo '+modelName+' - Batch size '+x+'  | tee -a ../../nnir_output.log)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; MIOPEN_FIND_ENFORCE='+str(miopenFind)+' ./anntest weights.bin | tee -a ../../nnir_output.log)');
@@ -149,8 +149,8 @@ if profileMode == 2:
 				print "\n",modelName," - Batch size ", x
 				x = str(x)
 				os.system('(cd '+develop_dir+'/'+modelName+'; mkdir nnir_build_'+x+')');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe2nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir2openvx.py . .)');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe_to_nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_to_openvx.py . .)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; cmake .; make)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; echo '+modelName+' - Batch size '+x+'  | tee -a ../../nnir_output.log)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_build_'+x+'; MIOPEN_FIND_ENFORCE='+str(miopenFind)+' ./anntest weights.bin | tee -a ../../nnir_output.log)');
@@ -172,7 +172,7 @@ if profileMode == 2:
 
 # run caffe2nnir2openvx with fuse flow
 if profileMode == 3:
-	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python')
+	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/MIVisionX/model_compiler/python')
 	for i in range(len(caffeModelConfig)):
 		modelName, channel, height, width = caffeModelConfig[i]
 		print "\n caffe2nnir2openvx --",modelName,"\n"
@@ -181,9 +181,9 @@ if profileMode == 3:
 			print "\n",modelName," - Batch size ", x 
 			x = str(x)
 			os.system('(cd '+develop_dir+'/'+modelName+'; mkdir nnir_fuse_build_'+x+')');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe2nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir-update.py --fuse-ops 1 . .)');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir2openvx.py . .)');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe_to_nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_update.py --fuse-ops 1 . .)');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_to_openvx.py . .)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; cmake .; make)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; echo '+modelName+' - Batch size '+x+'  | tee -a ../../nnir_fuse_output.log)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; MIOPEN_FIND_ENFORCE='+str(miopenFind)+' ./anntest weights.bin | tee -a ../../nnir_fuse_output.log)');
@@ -193,9 +193,9 @@ if profileMode == 3:
 				print "\n",modelName," - Batch size ", x 
 				x = str(x)
 				os.system('(cd '+develop_dir+'/'+modelName+'; mkdir nnir_fuse_build_'+x+')');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe2nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir-update.py --fuse-ops 1 . .)');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir2openvx.py . .)');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe_to_nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_update.py --fuse-ops 1 . .)');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_to_openvx.py . .)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; cmake .; make)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; echo '+modelName+' - Batch size '+x+'  | tee -a ../../nnir_fuse_output.log)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; MIOPEN_FIND_ENFORCE='+str(miopenFind)+' ./anntest weights.bin | tee -a ../../nnir_fuse_output.log)');
@@ -217,7 +217,7 @@ if profileMode == 3:
 	
 # run caffe2nnir2openvx with fuse flow
 if profileMode == 4:
-	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python')
+	modelCompilerScripts_dir = os.path.expanduser(buildDir_MIVisionX+'/MIVisionX/model_compiler/python')
 	for i in range(len(caffeModelConfig)):
 		modelName, channel, height, width = caffeModelConfig[i]
 		print "\n caffe2nnir2openvx --",modelName,"\n"
@@ -226,9 +226,9 @@ if profileMode == 4:
 			print "\n",modelName," - Batch size ", x 
 			x = str(x)
 			os.system('(cd '+develop_dir+'/'+modelName+'; mkdir nnir_fuse_build_'+x+')');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe2nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir-update.py --convert-fp16 1 . .)');
-			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir2openvx.py . .)');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe_to_nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_update.py --convert-fp16 1 . .)');
+			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_to_openvx.py . .)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; cmake .; make)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; echo '+modelName+' - Batch size '+x+'  | tee -a ../../nnir_fuse_output.log)');
 			os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; MIOPEN_FIND_ENFORCE='+str(miopenFind)+' ./anntest weights.bin | tee -a ../../nnir_fuse_output.log)');
@@ -238,9 +238,9 @@ if profileMode == 4:
 				print "\n",modelName," - Batch size ", x 
 				x = str(x)
 				os.system('(cd '+develop_dir+'/'+modelName+'; mkdir nnir_fuse_build_'+x+')');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe2nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir-update.py --convert-fp16 1 . .)');
-				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir2openvx.py . .)');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/caffe_to_nnir.py ../'+modelName+'/'+modelName+'.caffemodel . --input-dims '+x+','+str(channel)+','+str(height)+','+str(width)+')');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_update.py --convert-fp16 1 . .)');
+				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; python '+modelCompilerScripts_dir+'/nnir_to_openvx.py . .)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; cmake .; make)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; echo '+modelName+' - Batch size '+x+'  | tee -a ../../nnir_fuse_output.log)');
 				os.system('(cd '+develop_dir+'/'+modelName+'/nnir_fuse_build_'+x+'; MIOPEN_FIND_ENFORCE='+str(miopenFind)+' ./anntest weights.bin | tee -a ../../nnir_fuse_output.log)');
