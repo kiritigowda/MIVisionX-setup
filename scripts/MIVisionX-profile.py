@@ -97,7 +97,7 @@ else:
 		exit()
 
 
-# run caffe models
+# run models
 develop_dir = os.path.expanduser(buildDir_MIVisionX+'/develop')
 if(os.path.exists(develop_dir)):
 	os.system('(cd '+buildDir_MIVisionX+'; rm -rf develop)');
