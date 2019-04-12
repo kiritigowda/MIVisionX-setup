@@ -15,13 +15,16 @@ from datetime import datetime
 from subprocess import Popen, PIPE, STDOUT
 from datetime import datetime
 
-opts, args = getopt.getopt(sys.argv[1:], 'd:')
+opts, args = getopt.getopt(sys.argv[1:], 'd:m:')
 
 buildDir = ''
+profileMode = 0
 
 for opt, arg in opts:
     if opt == '-d':
         buildDir = arg
+    elif opt =='-m':
+        profileMode = int(arg)
 
 if buildDir == '':
     print('Invalid command line arguments.\n \t\t\t\t-d [build directory - required]\n ')
@@ -33,6 +36,10 @@ else:
     buildDir_MIVisionX = buildDir+'MIVisionX'
 
 AMDOVX_dir = os.path.expanduser(buildDir_MIVisionX)
+
+if profileMode == 0:
+    profileMode = 1
+
 
 def shell(cmd):
 
@@ -119,72 +126,417 @@ if __name__ == "__main__":
     rocm_packages = shell('dpkg-query -W | grep rocm').split('\n')    
 
     # write report
-    print("\nGenerating Report File...\n")
-    with open(report_filename, 'w') as f:
+    if profileMode == 1:
+        print("\nGenerating Report File...\n")
+        with open(report_filename, 'w') as f:
 
-        f.write("Full Report\n")
-        f.write("=====================\n")
-        f.write("\n")
-        f.write("Generated: %s\n" % report_dtstr)
-        f.write("\n")
-        f.write("\n\nBenchmark Report\n")
-        f.write("--------\n")
-        f.write("\n")
-        with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_noFuse_profile.md') as benchmarkFile:
-            for line in benchmarkFile:
-                f.write("%s" % line)
+            f.write("Full Report\n")
+            f.write("=====================\n")
+            f.write("\n")
+            f.write("Generated: %s\n" % report_dtstr)
+            f.write("\n")
+            f.write("\n\nBenchmark Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_noFuse_profile.md') as benchmarkFile:
+                for line in benchmarkFile:
+                    f.write("%s" % line)
 
-        f.write("\n")
-        f.write("\n")
+            f.write("\n")
+            f.write("\n")
 
-        f.write("\n\nPlatform Report\n")
-        f.write("--------\n")
-        f.write("\n")
-        f.write("Platform: %s (%s)\n" % (platform_name_fq, platform_ip))
-        f.write("\n")
+            f.write("\n\nPlatform Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            f.write("Platform: %s (%s)\n" % (platform_name_fq, platform_ip))
+            f.write("\n")
 
-        write_formatted(sys_info, f)
-        write_formatted(cpu_info, f)
-        write_formatted(gpu_info, f)
-        write_formatted(board_info, f)
-        write_formatted(memory_info, f)
+            write_formatted(sys_info, f)
+            write_formatted(cpu_info, f)
+            write_formatted(gpu_info, f)
+            write_formatted(board_info, f)
+            write_formatted(memory_info, f)
 
-        f.write("ROCm\n")
-        f.write("-------------\n")
-        f.write("\n")
-        write_lines_as_table(['Package', 'Version'], rocm_packages, f)
-        f.write("\n\n\n")
+            f.write("ROCm\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_lines_as_table(['Package', 'Version'], rocm_packages, f)
+            f.write("\n\n\n")
 
-        f.write("Vbios\n")
-        f.write("-------------\n")
-        f.write("\n")
-        write_formatted(vbios, f)
-        f.write("\n")
-        f.write("ROCm device info\n")
-        f.write("-------------\n")
-        f.write("\n")
-        write_formatted(rocmInfo, f)
-        f.write("\n")
+            f.write("Vbios\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(vbios, f)
+            f.write("\n")
+            f.write("ROCm device info\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(rocmInfo, f)
+            f.write("\n")
 
-        f.write("Dynamic Libraries\n")
-        f.write("-----------------\n")
-        f.write("\n")
-        write_formatted(lib_tree, f)
-        f.write("\n")
+            f.write("Dynamic Libraries\n")
+            f.write("-----------------\n")
+            f.write("\n")
+            write_formatted(lib_tree, f)
+            f.write("\n")
 
-        f.write("\n\n---\nCopyright AMD 2018\n")
+            f.write("\n\n---\nCopyright AMD 2018\n")
 
-    ## File diff generator
-    diffFolder = '~/.AMDOVX-Diff'
-    diffFolder_dir = os.path.expanduser(diffFolder)
+        ## File diff generator
+        diffFolder = '~/.AMDOVX-Diff'
+        diffFolder_dir = os.path.expanduser(diffFolder)
 
-    if(os.path.exists(diffFolder_dir)):
-        print("\nGenerating Diff File...\n")
-        titleName = 'Diff-Report'
-        os.system('diff -y --suppress-common-lines '+report_filename+' '+diffFolder_dir+'/latestReportFile.md | aha --black --title '+titleName+' > reportDiff.html');
-        os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
-    else:
-        os.system('(cd ; mkdir '+diffFolder_dir+')');
-        os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+        if(os.path.exists(diffFolder_dir)):
+            print("\nGenerating Diff File...\n")
+            titleName = 'Diff-Report'
+            os.system('diff -y --suppress-common-lines '+report_filename+' '+diffFolder_dir+'/latestReportFile.md | aha --black --title '+titleName+' > reportDiff.html');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+        else:
+            os.system('(cd ; mkdir '+diffFolder_dir+')');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
 
+    elif profileMode == 2:
+        print("\nGenerating Report File...\n")
+        with open(report_filename, 'w') as f:
+
+            f.write("Full Report\n")
+            f.write("=====================\n")
+            f.write("\n")
+            f.write("Generated: %s\n" % report_dtstr)
+            f.write("\n")
+            f.write("\n\nBenchmark Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fuse_profile.md') as benchmarkFile:
+                for line in benchmarkFile:
+                    f.write("%s" % line)
+
+            f.write("\n")
+            f.write("\n")
+
+            f.write("\n\nPlatform Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            f.write("Platform: %s (%s)\n" % (platform_name_fq, platform_ip))
+            f.write("\n")
+
+            write_formatted(sys_info, f)
+            write_formatted(cpu_info, f)
+            write_formatted(gpu_info, f)
+            write_formatted(board_info, f)
+            write_formatted(memory_info, f)
+
+            f.write("ROCm\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_lines_as_table(['Package', 'Version'], rocm_packages, f)
+            f.write("\n\n\n")
+
+            f.write("Vbios\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(vbios, f)
+            f.write("\n")
+            f.write("ROCm device info\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(rocmInfo, f)
+            f.write("\n")
+
+            f.write("Dynamic Libraries\n")
+            f.write("-----------------\n")
+            f.write("\n")
+            write_formatted(lib_tree, f)
+            f.write("\n")
+
+            f.write("\n\n---\nCopyright AMD 2018\n")
+
+        ## File diff generator
+        diffFolder = '~/.AMDOVX-Diff'
+        diffFolder_dir = os.path.expanduser(diffFolder)
+
+        if(os.path.exists(diffFolder_dir)):
+            print("\nGenerating Diff File...\n")
+            titleName = 'Diff-Report'
+            os.system('diff -y --suppress-common-lines '+report_filename+' '+diffFolder_dir+'/latestReportFile.md | aha --black --title '+titleName+' > reportDiff.html');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+        else:
+            os.system('(cd ; mkdir '+diffFolder_dir+')');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+
+    elif profileMode == 3:
+        print("\nGenerating Report File...\n")
+        with open(report_filename, 'w') as f:
+
+            f.write("Full Report\n")
+            f.write("=====================\n")
+            f.write("\n")
+            f.write("Generated: %s\n" % report_dtstr)
+            f.write("\n")
+            f.write("\n\nBenchmark Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fp16_profile.md') as benchmarkFile:
+                for line in benchmarkFile:
+                    f.write("%s" % line)
+
+            f.write("\n")
+            f.write("\n")
+
+            f.write("\n\nPlatform Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            f.write("Platform: %s (%s)\n" % (platform_name_fq, platform_ip))
+            f.write("\n")
+
+            write_formatted(sys_info, f)
+            write_formatted(cpu_info, f)
+            write_formatted(gpu_info, f)
+            write_formatted(board_info, f)
+            write_formatted(memory_info, f)
+
+            f.write("ROCm\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_lines_as_table(['Package', 'Version'], rocm_packages, f)
+            f.write("\n\n\n")
+
+            f.write("Vbios\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(vbios, f)
+            f.write("\n")
+            f.write("ROCm device info\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(rocmInfo, f)
+            f.write("\n")
+
+            f.write("Dynamic Libraries\n")
+            f.write("-----------------\n")
+            f.write("\n")
+            write_formatted(lib_tree, f)
+            f.write("\n")
+
+            f.write("\n\n---\nCopyright AMD 2018\n")
+
+        ## File diff generator
+        diffFolder = '~/.AMDOVX-Diff'
+        diffFolder_dir = os.path.expanduser(diffFolder)
+
+        if(os.path.exists(diffFolder_dir)):
+            print("\nGenerating Diff File...\n")
+            titleName = 'Diff-Report'
+            os.system('diff -y --suppress-common-lines '+report_filename+' '+diffFolder_dir+'/latestReportFile.md | aha --black --title '+titleName+' > reportDiff.html');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+        else:
+            os.system('(cd ; mkdir '+diffFolder_dir+')');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+
+    elif profileMode == 4:
+        print("\nGenerating Report File...\n")
+        with open(report_filename, 'w') as f:
+
+            f.write("Full Report\n")
+            f.write("=====================\n")
+            f.write("\n")
+            f.write("Generated: %s\n" % report_dtstr)
+            f.write("\n")
+            f.write("\n\nBenchmark Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            with open(buildDir_MIVisionX+'/develop/onnx2nnir2openvx_noFuse_profile.md') as benchmarkFile:
+                for line in benchmarkFile:
+                    f.write("%s" % line)
+
+            f.write("\n")
+            f.write("\n")
+
+            f.write("\n\nPlatform Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            f.write("Platform: %s (%s)\n" % (platform_name_fq, platform_ip))
+            f.write("\n")
+
+            write_formatted(sys_info, f)
+            write_formatted(cpu_info, f)
+            write_formatted(gpu_info, f)
+            write_formatted(board_info, f)
+            write_formatted(memory_info, f)
+
+            f.write("ROCm\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_lines_as_table(['Package', 'Version'], rocm_packages, f)
+            f.write("\n\n\n")
+
+            f.write("Vbios\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(vbios, f)
+            f.write("\n")
+            f.write("ROCm device info\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(rocmInfo, f)
+            f.write("\n")
+
+            f.write("Dynamic Libraries\n")
+            f.write("-----------------\n")
+            f.write("\n")
+            write_formatted(lib_tree, f)
+            f.write("\n")
+
+            f.write("\n\n---\nCopyright AMD 2018\n")
+
+        ## File diff generator
+        diffFolder = '~/.AMDOVX-Diff'
+        diffFolder_dir = os.path.expanduser(diffFolder)
+
+        if(os.path.exists(diffFolder_dir)):
+            print("\nGenerating Diff File...\n")
+            titleName = 'Diff-Report'
+            os.system('diff -y --suppress-common-lines '+report_filename+' '+diffFolder_dir+'/latestReportFile.md | aha --black --title '+titleName+' > reportDiff.html');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+        else:
+            os.system('(cd ; mkdir '+diffFolder_dir+')');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md'); 
+
+    elif profileMode == 5:
+        print("\nGenerating Report File...\n")
+        with open(report_filename, 'w') as f:
+
+            f.write("Full Report\n")
+            f.write("=====================\n")
+            f.write("\n")
+            f.write("Generated: %s\n" % report_dtstr)
+            f.write("\n")
+            f.write("\n\nBenchmark Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            with open(buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fuse_profile.md') as benchmarkFile:
+                for line in benchmarkFile:
+                    f.write("%s" % line)
+
+            f.write("\n")
+            f.write("\n")
+
+            f.write("\n\nPlatform Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            f.write("Platform: %s (%s)\n" % (platform_name_fq, platform_ip))
+            f.write("\n")
+
+            write_formatted(sys_info, f)
+            write_formatted(cpu_info, f)
+            write_formatted(gpu_info, f)
+            write_formatted(board_info, f)
+            write_formatted(memory_info, f)
+
+            f.write("ROCm\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_lines_as_table(['Package', 'Version'], rocm_packages, f)
+            f.write("\n\n\n")
+
+            f.write("Vbios\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(vbios, f)
+            f.write("\n")
+            f.write("ROCm device info\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(rocmInfo, f)
+            f.write("\n")
+
+            f.write("Dynamic Libraries\n")
+            f.write("-----------------\n")
+            f.write("\n")
+            write_formatted(lib_tree, f)
+            f.write("\n")
+
+            f.write("\n\n---\nCopyright AMD 2018\n")
+
+        ## File diff generator
+        diffFolder = '~/.AMDOVX-Diff'
+        diffFolder_dir = os.path.expanduser(diffFolder)
+
+        if(os.path.exists(diffFolder_dir)):
+            print("\nGenerating Diff File...\n")
+            titleName = 'Diff-Report'
+            os.system('diff -y --suppress-common-lines '+report_filename+' '+diffFolder_dir+'/latestReportFile.md | aha --black --title '+titleName+' > reportDiff.html');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+        else:
+            os.system('(cd ; mkdir '+diffFolder_dir+')');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md'); 
+
+    elif profileMode == 6:
+        print("\nGenerating Report File...\n")
+        with open(report_filename, 'w') as f:
+
+            f.write("Full Report\n")
+            f.write("=====================\n")
+            f.write("\n")
+            f.write("Generated: %s\n" % report_dtstr)
+            f.write("\n")
+            f.write("\n\nBenchmark Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            with open(buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fp16_profile.md') as benchmarkFile:
+                for line in benchmarkFile:
+                    f.write("%s" % line)
+
+            f.write("\n")
+            f.write("\n")
+
+            f.write("\n\nPlatform Report\n")
+            f.write("--------\n")
+            f.write("\n")
+            f.write("Platform: %s (%s)\n" % (platform_name_fq, platform_ip))
+            f.write("\n")
+
+            write_formatted(sys_info, f)
+            write_formatted(cpu_info, f)
+            write_formatted(gpu_info, f)
+            write_formatted(board_info, f)
+            write_formatted(memory_info, f)
+
+            f.write("ROCm\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_lines_as_table(['Package', 'Version'], rocm_packages, f)
+            f.write("\n\n\n")
+
+            f.write("Vbios\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(vbios, f)
+            f.write("\n")
+            f.write("ROCm device info\n")
+            f.write("-------------\n")
+            f.write("\n")
+            write_formatted(rocmInfo, f)
+            f.write("\n")
+
+            f.write("Dynamic Libraries\n")
+            f.write("-----------------\n")
+            f.write("\n")
+            write_formatted(lib_tree, f)
+            f.write("\n")
+
+            f.write("\n\n---\nCopyright AMD 2018\n")
+
+        ## File diff generator
+        diffFolder = '~/.AMDOVX-Diff'
+        diffFolder_dir = os.path.expanduser(diffFolder)
+
+        if(os.path.exists(diffFolder_dir)):
+            print("\nGenerating Diff File...\n")
+            titleName = 'Diff-Report'
+            os.system('diff -y --suppress-common-lines '+report_filename+' '+diffFolder_dir+'/latestReportFile.md | aha --black --title '+titleName+' > reportDiff.html');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md');
+        else:
+            os.system('(cd ; mkdir '+diffFolder_dir+')');
+            os.system(' cp '+report_filename+' '+diffFolder_dir+'/latestReportFile.md'); 
 exit(0)
