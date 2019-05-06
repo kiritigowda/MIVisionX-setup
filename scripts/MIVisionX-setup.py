@@ -31,7 +31,7 @@ if sudoLocation != '/usr/bin/sudo':
 if setupDir == '':
 	setupDir_deps = '~/mivisionx-deps'
 else:
-	setupDir_deps = setupDir+'/deps'
+	setupDir_deps = setupDir+'/mivisionx-deps'
 
 # setup for CentOS or Ubuntu
 linuxSystemInstall_check = '--nogpgcheck'
