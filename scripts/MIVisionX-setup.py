@@ -29,7 +29,7 @@ if sudoLocation != '/usr/bin/sudo':
 	status, userName = commands.getstatusoutput("whoami")
 
 if setupDir == '':
-	setupDir_deps = '~/deps'
+	setupDir_deps = '~/mivisionx-deps'
 else:
 	setupDir_deps = setupDir+'/deps'
 
@@ -62,8 +62,8 @@ else:
 	print("\nMIVisionX Dependencies Installation\n")
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake git wget unzip')
-	os.system('(cd '+setupDir+'; mkdir deps)')
-	os.system('(cd '+setupDir+'; mkdir deps)')
+	os.system('(cd '+setupDir+'; mkdir mivisionx-deps)')
+	os.system('(cd '+setupDir+'; mkdir mivisionx-deps)')
 	os.system('(cd '+deps_dir+'; git clone https://github.com/RadeonOpenCompute/rocm-cmake.git )')
 	os.system('(cd '+deps_dir+'; git clone https://github.com/ROCmSoftwarePlatform/MIOpenGEMM.git )')
 	os.system('(cd '+deps_dir+'; wget https://github.com/ROCmSoftwarePlatform/MIOpen/archive/'+MIOpenVersion+'.zip )')
