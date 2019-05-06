@@ -72,29 +72,31 @@ if profileMode == 0:
 
 
 # Bring CaffeModels
-caffeModels_dir = os.path.expanduser(buildDir_MIVisionX+'/caffeModels')
-if(os.path.exists(caffeModels_dir)):
-	print("\nCaffeModel Folder Exist\n")
-else:
-	os.system('(cd '+buildDir_MIVisionX+'; scp -r client@amdovx-file-server:~/caffeModels . )');
+if profileMode == 1 or profileMode == 2 or profileMode == 3:
+	caffeModels_dir = os.path.expanduser(buildDir_MIVisionX+'/caffeModels')
 	if(os.path.exists(caffeModels_dir)):
-		print("\nCaffeModel Retrived from the amdovx-file-server\n")
+		print("\nCaffeModel Folder Exist\n")
 	else:
-		print("\nERROR -- FILE SERVER CONNECTION FAILED, CHECK CONNECTION\n")
-		exit()
+		os.system('(cd '+buildDir_MIVisionX+'; scp -r client@amdovx-file-server:~/caffeModels . )');
+		if(os.path.exists(caffeModels_dir)):
+			print("\nCaffeModel Retrived from the amdovx-file-server\n")
+		else:
+			print("\nERROR -- FILE SERVER CONNECTION FAILED, CHECK CONNECTION\n")
+			exit()
 
 
 # Bring ONNX-Models
-onnxModels_dir = os.path.expanduser(buildDir_MIVisionX+'/onnxModels')
-if(os.path.exists(onnxModels_dir)):
-	print("\nOnnxModel Folder Exist\n")
-else:
-	os.system('(cd '+buildDir_MIVisionX+'; scp -r client@amdovx-file-server:~/onnxModels . )');
+elif profileMode == 4 or profileMode == 5 or profileMode == 6:
+	onnxModels_dir = os.path.expanduser(buildDir_MIVisionX+'/onnxModels')
 	if(os.path.exists(onnxModels_dir)):
-		print("\nonnxModel Retrived from the amdovx-file-server\n")
+		print("\nOnnxModel Folder Exist\n")
 	else:
-		print("\nERROR -- FILE SERVER CONNECTION FAILED, CHECK CONNECTION\n")
-		exit()
+		os.system('(cd '+buildDir_MIVisionX+'; scp -r client@amdovx-file-server:~/onnxModels . )');
+		if(os.path.exists(onnxModels_dir)):
+			print("\nonnxModel Retrived from the amdovx-file-server\n")
+		else:
+			print("\nERROR -- FILE SERVER CONNECTION FAILED, CHECK CONNECTION\n")
+			exit()
 
 
 # run models
@@ -104,19 +106,21 @@ if(os.path.exists(develop_dir)):
 
 os.system('(cd '+buildDir_MIVisionX+'; mkdir develop)');
 
-print("\nCaffe Models access ..\n")
-os.system('(cd '+develop_dir+'; mkdir caffe-folder)');
-for i in range(len(caffeModelConfig)):
-	modelName, channel, height, width = caffeModelConfig[i]	
-	os.system('(cd '+develop_dir+'/caffe-folder; mkdir '+modelName+')')
-	os.system('(cd '+develop_dir+'/caffe-folder/'+modelName+'; cp -r ../../../caffeModels/'+modelName+' .)');
+if profileMode == 1 or profileMode == 2 or profileMode == 3:
+	print("\nCaffe Models access ..\n")
+	os.system('(cd '+develop_dir+'; mkdir caffe-folder)');
+	for i in range(len(caffeModelConfig)):
+		modelName, channel, height, width = caffeModelConfig[i]	
+		os.system('(cd '+develop_dir+'/caffe-folder; mkdir '+modelName+')')
+		os.system('(cd '+develop_dir+'/caffe-folder/'+modelName+'; cp -r ../../../caffeModels/'+modelName+' .)');
 
-print("\nONNX Models access ..\n")
-os.system('(cd '+develop_dir+'; mkdir onnx-folder)');
-for i in range(len(onnxModelConfig)):
-	modelName, channel, height, width = onnxModelConfig[i]	
-	os.system('(cd '+develop_dir+'/onnx-folder; mkdir '+modelName+')');
-	os.system('(cd '+develop_dir+'/onnx-folder/'+modelName+'; cp -r ../../../onnxModels/'+modelName+' .)');
+elif profileMode == 4 or profileMode == 5 or profileMode == 6:
+	print("\nONNX Models access ..\n")
+	os.system('(cd '+develop_dir+'; mkdir onnx-folder)');
+	for i in range(len(onnxModelConfig)):
+		modelName, channel, height, width = onnxModelConfig[i]	
+		os.system('(cd '+develop_dir+'/onnx-folder; mkdir '+modelName+')');
+		os.system('(cd '+develop_dir+'/onnx-folder/'+modelName+'; cp -r ../../../onnxModels/'+modelName+' .)');
 
 # run caffe2nnir2openvx no fuse flow
 if profileMode == 1:
