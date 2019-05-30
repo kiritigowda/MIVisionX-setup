@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.0.1"
+__version__     = "1.0.2"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -62,7 +62,6 @@ else:
 	print("\nMIVisionX Dependencies Installation\n")
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake git wget unzip')
-	os.system('(cd '+setupDir+'; mkdir mivisionx-deps)')
 	os.system('(cd '+setupDir+'; mkdir mivisionx-deps)')
 	os.system('(cd '+deps_dir+'; git clone https://github.com/RadeonOpenCompute/rocm-cmake.git )')
 	os.system('(cd '+deps_dir+'; git clone https://github.com/ROCmSoftwarePlatform/MIOpenGEMM.git )')
