@@ -41,7 +41,7 @@ if(os.path.exists(buildGIT_dir)):
 else:
 	os.system('rm -rf '+buildMain_dir)
 	os.system('(cd ; mkdir '+buildMain_dir+')')
-	os.system('(cd '+buildMain_dir+'; git clone http://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX )')
+	os.system('(cd '+buildMain_dir+'; git clone https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX.git )')
 
 # AMDOVX Build
 if(os.path.exists(buildMake_dir)):
