@@ -37,12 +37,11 @@ buildGIT_dir = os.path.expanduser(buildDir_MIVisionX+'/MIVisionX')
 buildMake_dir = os.path.expanduser(buildDir_MIVisionX+'/build')
 if(os.path.exists(buildGIT_dir)):
 	print("\nGit Folder Exist\n")
-	os.system('(cd '+buildGIT_dir+'; git pull; git submodule init; git submodule update --recursive )')
+	os.system('(cd '+buildGIT_dir+'; git pull)')
 else:
 	os.system('rm -rf '+buildMain_dir)
 	os.system('(cd ; mkdir '+buildMain_dir+')')
-	os.system('(cd '+buildMain_dir+'; git clone --recursive http://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX )')
-	os.system('(cd '+buildGIT_dir+'; git submodule init; git submodule update --recursive  )')
+	os.system('(cd '+buildMain_dir+'; git clone http://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX )')
 
 # AMDOVX Build
 if(os.path.exists(buildMake_dir)):
