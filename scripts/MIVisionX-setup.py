@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.1.0"
+__version__     = "1.1.1"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -139,7 +139,7 @@ else:
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev')
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install yasm libx264-dev libx265-dev libnuma-dev libfdk-aac-dev')
-		os.system('(cd '+deps_dir+'/ffmpeg; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl)')
+		os.system('(cd '+deps_dir+'/ffmpeg; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl --enable-nonfree)')
 		os.system('(cd '+deps_dir+'/ffmpeg; make -j8 )')
 		os.system('sudo -v')
 		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' make install )')
