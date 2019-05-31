@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.0.2"
+__version__     = "1.1.0"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -65,6 +65,7 @@ else:
 	os.system('(cd '+setupDir+'; mkdir mivisionx-deps)')
 	os.system('(cd '+deps_dir+'; git clone https://github.com/RadeonOpenCompute/rocm-cmake.git )')
 	os.system('(cd '+deps_dir+'; git clone https://github.com/ROCmSoftwarePlatform/MIOpenGEMM.git )')
+	os.system('(cd '+deps_dir+'; git clone --recursive -b n4.0.4 https://git.ffmpeg.org/ffmpeg.git )')
 	os.system('(cd '+deps_dir+'; wget https://github.com/ROCmSoftwarePlatform/MIOpen/archive/'+MIOpenVersion+'.zip )')
 	os.system('(cd '+deps_dir+'; unzip '+MIOpenVersion+'.zip )')
 	os.system('(cd '+deps_dir+'; wget https://github.com/protocolbuffers/protobuf/archive/v3.5.2.zip )')
@@ -98,8 +99,8 @@ else:
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' '+linuxSystemInstall+' autoremove )')
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; ./autogen.sh )')
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; ./configure )')
-	os.system('(cd '+deps_dir+'/protobuf-3.5.2; make -j16 )')
-	os.system('(cd '+deps_dir+'/protobuf-3.5.2; make check -j16 )')
+	os.system('(cd '+deps_dir+'/protobuf-3.5.2; make -j8 )')
+	os.system('(cd '+deps_dir+'/protobuf-3.5.2; make check -j8 )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' make install )')
 	os.system('sudo -v')
@@ -128,3 +129,17 @@ else:
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install python-matplotlib python-numpy python-pil python-scipy python-skimage cython')
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install qt5-default qtcreator')
+
+	if linuxSystemInstall == 'apt-get':
+		os.system('sudo -v')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev')
+		os.system('sudo -v')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libsdl2-dev libtool libva-dev libvdpau-dev libvorbis-dev libxcb1-dev')
+		os.system('sudo -v')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev')
+		os.system('sudo -v')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install yasm libx264-dev libx265-dev libnuma-dev libfdk-aac-dev')
+		os.system('(cd '+deps_dir+'/ffmpeg; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl)')
+		os.system('(cd '+deps_dir+'/ffmpeg; make -j8 )')
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' make install )')
