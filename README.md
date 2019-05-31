@@ -20,7 +20,7 @@ This folder has the following python scripts
 ````
 python MIVisionX-setup.py --directory [setup directory - optional]
                           --installer [Package management tool - optional (default:apt-get) [options: Ubuntu:apt-get;CentOS:yum]]
-                          --miopen    [MIOpen Version - optional (default:1.7.0)]      
+                          --miopen    [MIOpen Version - optional (default:1.8.1)]      
 ````
 **Note:** use `--installer yum` for CentOS
 

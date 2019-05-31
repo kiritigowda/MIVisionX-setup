@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX build"
 __license__     = "MIT"
-__version__     = "0.9.91"
+__version__     = "1.0.0"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "beta"
@@ -37,12 +37,11 @@ buildGIT_dir = os.path.expanduser(buildDir_MIVisionX+'/MIVisionX')
 buildMake_dir = os.path.expanduser(buildDir_MIVisionX+'/build')
 if(os.path.exists(buildGIT_dir)):
 	print("\nGit Folder Exist\n")
-	os.system('(cd '+buildGIT_dir+'; git pull; git submodule init; git submodule update --recursive )')
+	os.system('(cd '+buildGIT_dir+'; git pull)')
 else:
 	os.system('rm -rf '+buildMain_dir)
 	os.system('(cd ; mkdir '+buildMain_dir+')')
-	os.system('(cd '+buildMain_dir+'; git clone --recursive http://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX )')
-	os.system('(cd '+buildGIT_dir+'; git submodule init; git submodule update --recursive  )')
+	os.system('(cd '+buildMain_dir+'; git clone https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX.git )')
 
 # AMDOVX Build
 if(os.path.exists(buildMake_dir)):
