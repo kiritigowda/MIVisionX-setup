@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.1.1"
+__version__     = "1.2.0"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -50,7 +50,7 @@ else:
 		os.system('yum -y update')
 		os.system('yum -y install sudo')
 	os.system('sudo -v')
-	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3 boost boost-thread boost-devel openssl-devel')
+	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3 boost boost-thread boost-devel openssl-devel hg')
 
 # setup directory
 deps_dir = os.path.expanduser(setupDir_deps)
@@ -63,6 +63,7 @@ else:
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake git wget unzip')
 	os.system('(cd '+setupDir+'; mkdir mivisionx-deps)')
+	# Get Installation Source
 	os.system('(cd '+deps_dir+'; git clone https://github.com/RadeonOpenCompute/rocm-cmake.git )')
 	os.system('(cd '+deps_dir+'; git clone https://github.com/ROCmSoftwarePlatform/MIOpenGEMM.git )')
 	os.system('(cd '+deps_dir+'; git clone --recursive -b n4.0.4 https://git.ffmpeg.org/ffmpeg.git )')
@@ -73,16 +74,19 @@ else:
 	os.system('(cd '+deps_dir+'; wget https://github.com/opencv/opencv/archive/3.4.0.zip )')
 	os.system('(cd '+deps_dir+'; unzip 3.4.0.zip )')
 	os.system('(cd '+deps_dir+'; mkdir build )')
+	# Install ROCm-CMake
 	os.system('(cd '+deps_dir+'/build; mkdir rocm-cmake MIOpenGEMM MIOpen OpenCV )')
 	os.system('(cd '+deps_dir+'/build/rocm-cmake; '+linuxCMake+' ../../rocm-cmake )')
 	os.system('(cd '+deps_dir+'/build/rocm-cmake; make -j8 )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/build/rocm-cmake; sudo '+linuxFlag+' make install )')
+	# Install MIOpenGEMM
 	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; '+linuxCMake+' ../../MIOpenGEMM )')
 	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; make -j8 )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; sudo '+linuxFlag+' make install )')
 	os.system('sudo -v')
+	# Install MIOpen
 	os.system('(cd '+deps_dir+'/MIOpen-'+MIOpenVersion+'; sudo '+linuxFlag+' '+linuxCMake+' -P install_deps.cmake )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/build/MIOpen; sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libssl-dev libboost-dev libboost-system-dev libboost-filesystem-dev  )')
@@ -94,6 +98,7 @@ else:
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/build/MIOpen; sudo '+linuxFlag+' '+linuxSystemInstall+' autoremove )')
 	os.system('sudo -v')
+	# Install ProtoBuf
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake libtool curl make g++ unzip )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' '+linuxSystemInstall+' autoremove )')
@@ -113,6 +118,7 @@ else:
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' yes | pip install pytz )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' yes | pip install numpy )')
+	# Install OpenCV
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev')
 	os.system('sudo -v')
@@ -129,7 +135,7 @@ else:
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install python-matplotlib python-numpy python-pil python-scipy python-skimage cython')
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install qt5-default qtcreator')
-
+	# Install ffmpeg
 	if linuxSystemInstall == 'apt-get':
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake build-essential cmake git-core libass-dev libfreetype6-dev')
@@ -139,7 +145,33 @@ else:
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev')
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install yasm libx264-dev libx265-dev libnuma-dev libfdk-aac-dev')
-		os.system('(cd '+deps_dir+'/ffmpeg; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl --enable-nonfree)')
-		os.system('(cd '+deps_dir+'/ffmpeg; make -j8 )')
+	else:
 		os.system('sudo -v')
-		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' make install )')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake bzip2 bzip2-devel cmake freetype-devel')
+		os.system('sudo -v')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install gcc gcc-c++ git libtool make mercurial pkgconfig zlib-devel')
+		# Yasm
+		os.system('(cd '+deps_dir+'; curl -O -L https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz )')
+		os.system('(cd '+deps_dir+'; tar xzvf yasm-1.3.0.tar.gz )')
+		os.system('(cd '+deps_dir+'/yasm-1.3.0; ./configure; make -j8 )')
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/yasm-1.3.0; sudo '+linuxFlag+' make install )')
+		# libx264
+		os.system('(cd '+deps_dir+'; git clone --depth 1 https://code.videolan.org/videolan/x264.git )')
+		os.system('(cd '+deps_dir+'/x264; ./configure --enable-static; make -j8 )')
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/yasm-1.3.0; sudo '+linuxFlag+' make install )')
+		# libx265
+		os.system('(cd '+deps_dir+'; hg clone https://bitbucket.org/multicoreware/x265 )')
+		os.system('(cd '+deps_dir+'/x265/build/linux; cmake -G "Unix Makefiles" -DENABLE_SHARED:bool=off ../../source; make -j8 )')
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/x265/build/linux; sudo '+linuxFlag+' make install )')
+		# libfdk_aac
+		os.system('(cd '+deps_dir+'; git clone --depth 1 https://github.com/mstorsjo/fdk-aac )')
+		os.system('(cd '+deps_dir+'/fdk-aac; autoreconf -fiv; ./configure --disable-shared; make -j8 )')
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/x265/build/linux; sudo '+linuxFlag+' make install )')
+	os.system('(cd '+deps_dir+'/ffmpeg; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl --enable-nonfree)')
+	os.system('(cd '+deps_dir+'/ffmpeg; make -j8 )')
+	os.system('sudo -v')
+	os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' make install )')
