@@ -39,14 +39,33 @@ onnxModelConfig = [
 
 # nnef models to benchmark
 nnefModelConfig = [
-			'resnet50',
-			'resnet101',
-			'resnet152',
-			'googlenet',
-			'inception_v4',
-			'vgg16'
-			]
-
+			'alexnet-caffe',
+			'alexnet-onnx',
+			'vgg16-caffe',
+			'vgg16-onnx',
+			'vgg19-caffe',
+			'vgg19-onnx',
+			'googlenet-caffe',
+			'googlenet-onnx',
+			'inceptionv1-onnx',
+			'inceptionv2-onnx',
+			'resnetv1-18-onnx',
+			'resnetv1-34-onnx',
+			'resnetv1-50-onnx',
+			'resnetv1-101-onnx',
+			'resnetv1-152-caffe',
+			'resnetv2-18-onnx',
+			'resnetv2-34-onnx',
+			'resnetv2-50-onnx',
+			'resnetv2-101-onnx',
+			'mobilenetv1-caffe',
+			'mobilenetv2-onnx',
+			'mobilenetv2-caffe',
+			'squeezenet1.0-caffe',
+			'squeezenet1.0-onnx',
+			'squeezenet1.1-caffe',
+			'squeezenet1.1-onnx'
+]
 
 opts, args = getopt.getopt(sys.argv[1:], 'd:l:m:f:')
 
@@ -111,6 +130,7 @@ elif profileMode == 4 or profileMode == 5 or profileMode == 6:
 # Bring NNEF-Models
 elif profileMode == 7 or profileMode == 8 or profileMode == 9:
 	nnefModels_dir = os.path.expanduser(buildDir_MIVisionX+'/nnefModels')
+        print nnefModels_dir
 	if(os.path.exists(nnefModels_dir)):
 		print("\nNNEFModel Folder Exist\n")
 	else:
@@ -149,7 +169,7 @@ elif profileMode == 7 or profileMode == 8 or profileMode == 9:
 	print("\nNNEF Models access ..\n")
 	os.system('(cd '+develop_dir+'; mkdir nnef-folder)');
 	for i in range(len(nnefModelConfig)):
-		modelName, channel, height, width = nnefModelConfig[i]	
+		modelName = nnefModelConfig[i]	
 		os.system('(cd '+develop_dir+'/nnef-folder; mkdir '+modelName+')');
 		os.system('(cd '+develop_dir+'/nnef-folder/'+modelName+'; cp -r ../../../nnefModels/'+modelName+' .)');
 
