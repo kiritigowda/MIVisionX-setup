@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.2.2"
+__version__     = "1.3.0"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -144,12 +144,18 @@ else:
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texinfo wget zlib1g-dev')
 		os.system('sudo -v')
-		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install yasm libx264-dev libx265-dev libnuma-dev libfdk-aac-dev')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install nasm yasm libx264-dev libx265-dev libnuma-dev libfdk-aac-dev')
 	else:
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake bzip2 bzip2-devel cmake freetype-devel libass-devel')
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install gcc gcc-c++ git libtool make mercurial pkgconfig zlib-devel')
+		# Nasm
+		os.system('(cd '+deps_dir+'; curl -O -L https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.bz2 )')
+		os.system('(cd '+deps_dir+'; tar xjvf nasm-2.14.02.tar.bz2 )')
+		os.system('(cd '+deps_dir+'/nasm-2.14.02; ./autogen.sh; ./configure; make -j8 )')
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/nasm-2.14.02; sudo '+linuxFlag+' make install )')
 		# Yasm
 		os.system('(cd '+deps_dir+'; curl -O -L https://www.tortall.net/projects/yasm/releases/yasm-1.3.0.tar.gz )')
 		os.system('(cd '+deps_dir+'; tar xzvf yasm-1.3.0.tar.gz )')
