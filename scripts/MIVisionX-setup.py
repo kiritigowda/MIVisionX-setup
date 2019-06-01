@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.2.0"
+__version__     = "1.2.1"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -147,7 +147,7 @@ else:
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install yasm libx264-dev libx265-dev libnuma-dev libfdk-aac-dev')
 	else:
 		os.system('sudo -v')
-		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake bzip2 bzip2-devel cmake freetype-devel')
+		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake bzip2 bzip2-devel cmake freetype-devel libass-devel')
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install gcc gcc-c++ git libtool make mercurial pkgconfig zlib-devel')
 		# Yasm
