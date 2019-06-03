@@ -87,7 +87,7 @@ for opt, arg in opts:
 if buildDir == '':
     print('Invalid command line arguments.\n \t\t\t\t-d [build directory - required]\n  '\
     										'\t\t\t\t-l [profile level - optional (level 1-8, default:7)]\n'\
-    										'\t\t\t\t-m [profile mode - optional (level 1-7, default:1)]\n'\
+    										'\t\t\t\t-m [profile mode - optional (level 1-9, default:1)]\n'\
     										'\t\t\t\t-f [MIOPEN_FIND_ENFORCE mode - optional (level 1-5, default:1)]\n')
     exit()
 
