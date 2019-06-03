@@ -167,7 +167,7 @@ else:
 			os.system('(cd '+deps_dir+'/yasm-1.3.0; sudo '+linuxFlag+' make install )')
 			# libx264
 			os.system('(cd '+deps_dir+'; git clone --depth 1 https://code.videolan.org/videolan/x264.git )')
-			os.system('(cd '+deps_dir+'/x264; ./configure --enable-static; make -j8 )')
+			os.system('(cd '+deps_dir+'/x264; ./configure --enable-static --disable-opencl; make -j8 )')
 			os.system('sudo -v')
 			os.system('(cd '+deps_dir+'/x264; sudo '+linuxFlag+' make install )')
 			# libx265
