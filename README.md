@@ -20,9 +20,10 @@ This folder has the following python scripts
 ````
 python MIVisionX-setup.py --directory [setup directory - optional]
                           --installer [Package management tool - optional (default:apt-get) [options: Ubuntu:apt-get;CentOS:yum]]
-                          --miopen    [MIOpen Version - optional (default:1.8.1)]      
+                          --miopen    [MIOpen Version - optional (default:1.8.1)]
+                          --ffmpeg    [FFMPEG Installation - optional (default:no) [options:Install ffmpeg - yes]]
 ````
-**Note:** use `--installer yum` for CentOS
+**Note:** use `--installer yum` for **CentOS**
 
 2. **MIVisionX-build.py** - This script clones the latest MIVisionX from GitHub, builds and installs the project. If the -d build directory is not given the script creates a MIVisionX folder in the home/'~/' directory by default, else in the user-specified folder.
 
@@ -31,7 +32,7 @@ python MIVisionX-setup.py --directory [setup directory - optional]
 python MIVisionX-build.py --directory [setup directory - optional]
                           --cmake     [Linux cmake - optional (default:cmake) [options:Ubuntu - cmake; CentOS - cmake3]]  
 ````
-**Note:** use `--cmake cmake3` for CentOS
+**Note:** use `--cmake cmake3` for **CentOS**
 
 ## **Note** - `The steps below are only for developers with access to AMD developer server`
 
