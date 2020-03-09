@@ -1,13 +1,17 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.5.1"
+__version__     = "1.6"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
 
 import argparse
-import commands
+import sys
+if sys.version_info[0] < 3:
+	import commands
+else:
+	import subprocess
 import os
 
 # Import arguments
@@ -18,6 +22,7 @@ parser.add_argument('--miopen',    type=str, default='2.1.0',   help='MIOpen Ver
 parser.add_argument('--miopengemm',type=str, default='1.1.5',   help='MIOpenGEMM Version - optional (default:1.1.5)')
 parser.add_argument('--ffmpeg',    type=str, default='no',      help='FFMPEG Installation - optional (default:no) [options: Install ffmpeg - yes')
 parser.add_argument('--rpp',       type=str, default='yes',     help='Radeon Performance Primitives (RPP) Installation - optional (default:yes) [options:yes/no]')
+parser.add_argument('--reinstall', type=str, default='no',      help='Remove previous setup and reinstall (default:no) [options:yes/no]')
 args = parser.parse_args()
 
 setupDir = args.directory
@@ -26,13 +31,20 @@ MIOpenVersion = args.miopen
 MIOpenGEMMVersion = args.miopengemm
 ffmpegInstall = args.ffmpeg
 rppInstall = args.rpp
+reinstall = args.reinstall
 
 # sudo requirement check
 sudoLocation = ''
 userName = ''
-status, sudoLocation = commands.getstatusoutput("which sudo")
-if sudoLocation != '/usr/bin/sudo':
-	status, userName = commands.getstatusoutput("whoami")
+if sys.version_info[0] < 3:
+	status, sudoLocation = commands.getstatusoutput("which sudo")
+	if sudoLocation != '/usr/bin/sudo':
+		status, userName = commands.getstatusoutput("whoami")
+else:
+	status, sudoLocation = subprocess.getstatusoutput("which sudo")
+	if sudoLocation != '/usr/bin/sudo':
+		status, userName = subprocess.getstatusoutput("whoami")
+	
 
 if setupDir == '':
 	setupDir_deps = '~/mivisionx-deps'
@@ -61,8 +73,31 @@ else:
 # setup directory
 deps_dir = os.path.expanduser(setupDir_deps)
 
+# Delete previous install
+if(os.path.exists(deps_dir) and reinstall == 'yes'):
+	os.system('sudo -v')
+	os.system('sudo rm -rf '+deps_dir)
+
 # MIVisionX setup
 if(os.path.exists(deps_dir)):
+	os.system('sudo -v')
+	os.system('(cd '+deps_dir+'; sudo mv half.hpp /usr/local/include/ )')
+	os.system('sudo -v')
+	os.system('(cd '+deps_dir+'/build/rocm-cmake; sudo '+linuxFlag+' make install -j8)')
+	os.system('sudo -v')
+	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; sudo '+linuxFlag+' make install -j8)')
+	os.system('sudo -v')
+	os.system('(cd '+deps_dir+'/build/MIOpen; sudo '+linuxFlag+' make install -j8)')
+	os.system('sudo -v')
+	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' make install -j8)')
+	os.system('sudo -v')
+	os.system('(cd '+deps_dir+'/build/OpenCV; sudo '+linuxFlag+' make install -j8)')
+	if rppInstall == 'yes':
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/rpp/build; sudo '+linuxFlag+' make install -j8)')
+	if ffmpegInstall == 'yes':
+		os.system('sudo -v')
+		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' make install -j8)')
 	print("\nMIVisionX Dependencies Installed\n")
 else:
 	print("\nMIVisionX Dependencies Installation\n")
@@ -97,8 +132,8 @@ else:
 	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; make -j8 )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/build/MIOpenGEMM; sudo '+linuxFlag+' make install )')
-	os.system('sudo -v')
 	# Install MIOpen
+	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/MIOpen-'+MIOpenVersion+'; sudo '+linuxFlag+' '+linuxCMake+' -P install_deps.cmake )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/build/MIOpen; sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install libssl-dev libboost-dev libboost-system-dev libboost-filesystem-dev  )')
@@ -109,8 +144,8 @@ else:
 	os.system('(cd '+deps_dir+'/build/MIOpen; sudo '+linuxFlag+' make install )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/build/MIOpen; sudo '+linuxFlag+' '+linuxSystemInstall+' autoremove )')
-	os.system('sudo -v')
 	# Install ProtoBuf
+	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install autoconf automake libtool curl make g++ unzip )')
 	os.system('sudo -v')
 	os.system('(cd '+deps_dir+'/protobuf-3.5.2; sudo '+linuxFlag+' '+linuxSystemInstall+' autoremove )')
@@ -147,6 +182,7 @@ else:
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install python-matplotlib python-numpy python-pil python-scipy python-skimage cython')
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install qt5-default qtcreator')
+	# Install RPP
 	if rppInstall == 'yes':
 		os.system('(cd '+deps_dir+'; git clone https://github.com/GPUOpen-ProfessionalCompute-Libraries/rpp.git; cd rpp; mkdir build; cd build; cmake -DBACKEND=OCL ../; make -j4; sudo make install)')
 	# Install ffmpeg
@@ -198,3 +234,4 @@ else:
 		os.system('(cd '+deps_dir+'/ffmpeg; make -j8 )')
 		os.system('sudo -v')
 		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' make install )')
+	print("\nMIVisionX Dependencies Installed\n")
