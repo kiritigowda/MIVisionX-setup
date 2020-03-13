@@ -1,11 +1,11 @@
 __author__      = "Kiriti Nagesh Gowda"
-__copyright__   = "Copyright 2018, AMD MIVision Generate Full Report"
+__copyright__   = "Copyright 2018-2020, AMD MIVision Generate Full Report"
 __credits__     = ["Aguren, Derrick"]
 __license__     = "MIT"
-__version__     = "0.9.5"
+__version__     = "1.0"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
-__status__      = "beta"
+__status__      = "Shipping"
 
 import os
 import getopt
@@ -78,20 +78,15 @@ def strip_libtree_addresses(lib_tree):
 
 if __name__ == "__main__":
 
-    # generate annie .so
-    print("\nGenerating .so File...\n")
-    logOutput = shell ('mkdir '+buildDir_MIVisionX+'/buildLog')
-    logOutput = shell ('cd '+buildDir_MIVisionX+'/buildLog')
-    logOutput = shell ('python '+buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python/caffe2nnir.py '+buildDir_MIVisionX+'/caffeModels/resnet50/resnet50.caffemodel '+buildDir_MIVisionX+'/buildLog/resnet50 --input-dims 1,3,224,224')
-    logOutput = shell ('python '+buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python/nnir2openvx.py '+buildDir_MIVisionX+'/buildLog/resnet50 '+buildDir_MIVisionX+'/buildLog/resnet50-build')
-    logOutput = shell ('(cd '+buildDir_MIVisionX+'/buildLog/resnet50-build/;cmake .;make)')
-
     # report configuration
     out_filename_time = False
-    path_to_so = buildDir_MIVisionX+'/buildLog/resnet50-build/libannmodule.so'
+    if profileMode == 1:
+        path_to_so = buildDir_MIVisionX+'/develop/caffe-folder/googlenet/nnir_build_1/libannmodule.so'
+    else:
+        print("\nERROR - Dynamic Library List Implemented only for MODE-1 : OTHER MODES TBD\n")
 
-    # get data
 
+    # get system data
     platform_name = shell('hostname')
     platform_name_fq = shell('hostname --all-fqdns')
     platform_ip = shell('hostname -I')[0:-1] # extra trailing space
@@ -130,7 +125,7 @@ if __name__ == "__main__":
         print("\nGenerating Report File...\n")
         with open(report_filename, 'w') as f:
 
-            f.write("Full Report\n")
+            f.write("MIVisionX Neural Net Performance Report\n")
             f.write("=====================\n")
             f.write("\n")
             f.write("Generated: %s\n" % report_dtstr)
@@ -157,30 +152,30 @@ if __name__ == "__main__":
             write_formatted(board_info, f)
             write_formatted(memory_info, f)
 
-            f.write("ROCm\n")
+            f.write("ROCm Package and Version Report\n")
             f.write("-------------\n")
             f.write("\n")
             write_lines_as_table(['Package', 'Version'], rocm_packages, f)
             f.write("\n\n\n")
 
-            f.write("Vbios\n")
+            f.write("Vbios Report\n")
             f.write("-------------\n")
             f.write("\n")
             write_formatted(vbios, f)
             f.write("\n")
-            f.write("ROCm device info\n")
+            f.write("ROCm Device Info Report\n")
             f.write("-------------\n")
             f.write("\n")
             write_formatted(rocmInfo, f)
             f.write("\n")
 
-            f.write("Dynamic Libraries\n")
+            f.write("Dynamic Libraries Report\n")
             f.write("-----------------\n")
             f.write("\n")
             write_formatted(lib_tree, f)
             f.write("\n")
 
-            f.write("\n\n---\nCopyright AMD 2018\n")
+            f.write("\n\n---\nCopyright AMD 2018 - 2020\n")
 
         ## File diff generator
         diffFolder = '~/.AMDOVX-Diff'
