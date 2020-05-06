@@ -272,7 +272,7 @@ else:
 			os.system('(cd '+deps_dir+'/fdk-aac; sudo '+linuxFlag+' make install )')
 		os.system('sudo -v')
 		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' ldconfig )')
-		os.system('(cd '+deps_dir+'/ffmpeg; PKG_CONFIG_PATH="/usr/local/lib/pkgconfig" ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl --enable-nonfree)')
+		os.system('(cd '+deps_dir+'/ffmpeg; export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig"; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl --enable-nonfree)')
 		os.system('(cd '+deps_dir+'/ffmpeg; make -j8 )')
 		os.system('sudo -v')
 		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' make install )')
