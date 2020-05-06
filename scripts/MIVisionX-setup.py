@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.7.7"
+__version__     = "1.7.8"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -67,8 +67,10 @@ else:
 	if userName == 'root':
 		os.system('yum -y update')
 		os.system('yum -y install sudo')
+		os.system('scl enable devtoolset-7 bash')
 	os.system('sudo -v')
-	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3 boost boost-thread boost-devel openssl-devel hg')
+	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3 boost boost-thread boost-devel')
+	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install openssl-devel hg autoconf automake')
 
 # setup directory
 deps_dir = os.path.expanduser(setupDir_deps)
@@ -266,10 +268,10 @@ else:
 			os.system('sudo -v')
 			os.system('(cd '+deps_dir+'/x265/build/linux; sudo '+linuxFlag+' make install; sudo '+linuxFlag+' ldconfig )')
 			# libfdk_aac
-			os.system('(cd '+deps_dir+'; wget https://downloads.sourceforge.net/opencore-amr/fdk-aac-2.0.1.tar.gz; tar -xvf fdk-aac-2.0.1.tar.gz )')
-			os.system('(cd '+deps_dir+'/fdk-aac-2.0.1; ./configure --prefix=/usr --disable-static; make -j8 )')
+			os.system('(cd '+deps_dir+'; git clone https://github.com/mstorsjo/fdk-aac.git )')
+			os.system('(cd '+deps_dir+'/fdk-aac; autoreconf -fiv; ./configure --disable-shared; make -j8 )')
 			os.system('sudo -v')
-			os.system('(cd '+deps_dir+'/fdk-aac-2.0.1; sudo '+linuxFlag+' make install )')
+			os.system('(cd '+deps_dir+'/fdk-aac; sudo '+linuxFlag+' make install )')
 		os.system('sudo -v')
 		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' ldconfig )')
 		os.system('(cd '+deps_dir+'/ffmpeg; export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig/"; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl --enable-nonfree)')
