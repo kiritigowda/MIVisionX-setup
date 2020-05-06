@@ -67,8 +67,8 @@ else:
 	if userName == 'root':
 		os.system('yum -y update')
 		os.system('yum -y install sudo')
-		os.system('scl enable devtoolset-7 bash')
 	os.system('sudo -v')
+	os.system('sudo yum -y update')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake3 boost boost-thread boost-devel')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install openssl-devel hg autoconf automake')
 
