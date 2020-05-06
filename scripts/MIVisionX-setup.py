@@ -1,7 +1,7 @@
 __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018, AMD Radeon MIVisionX setup"
 __license__     = "MIT"
-__version__     = "1.7.6"
+__version__     = "1.7.7"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
@@ -266,10 +266,10 @@ else:
 			os.system('sudo -v')
 			os.system('(cd '+deps_dir+'/x265/build/linux; sudo '+linuxFlag+' make install; sudo '+linuxFlag+' ldconfig )')
 			# libfdk_aac
-			os.system('(cd '+deps_dir+'; git clone --depth 1 https://github.com/mstorsjo/fdk-aac )')
-			os.system('(cd '+deps_dir+'/fdk-aac; autoreconf -fiv; ./configure; make -j8 )')
+			os.system('(cd '+deps_dir+'; wget https://downloads.sourceforge.net/opencore-amr/fdk-aac-2.0.1.tar.gz; tar -xvf fdk-aac-2.0.1.tar.gz )')
+			os.system('(cd '+deps_dir+'/fdk-aac-2.0.1; ./configure --prefix=/usr --disable-static; make -j8 )')
 			os.system('sudo -v')
-			os.system('(cd '+deps_dir+'/fdk-aac; sudo '+linuxFlag+' make install )')
+			os.system('(cd '+deps_dir+'/fdk-aac-2.0.1; sudo '+linuxFlag+' make install )')
 		os.system('sudo -v')
 		os.system('(cd '+deps_dir+'/ffmpeg; sudo '+linuxFlag+' ldconfig )')
 		os.system('(cd '+deps_dir+'/ffmpeg; export PKG_CONFIG_PATH="/usr/local/lib/pkgconfig/"; ./configure --enable-shared --disable-static --enable-libx264 --enable-libx265 --enable-libfdk-aac --enable-libass --enable-gpl --enable-nonfree)')
