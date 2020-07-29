@@ -2,7 +2,7 @@ __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018 - 2020, AMD MIVisionX Platform Report"
 __credits__     = ["Aguren, Derrick"]
 __license__     = "MIT"
-__version__     = "0.9.6"
+__version__     = "0.9.7"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "beta"
@@ -12,26 +12,6 @@ import getopt
 import sys
 from subprocess import Popen, PIPE, STDOUT
 from datetime import datetime
-
-opts, args = getopt.getopt(sys.argv[1:], 'd:')
-
-buildDir = ''
-
-for opt, arg in opts:
-    if opt == '-d':
-    	buildDir = arg
-
-if buildDir == '':
-    print('Invalid command line arguments.\n \t\t\t\t-d [build directory - required]\n ')
-    exit()
-
-if buildDir == '':
-	buildDir_MIVisionX = '~/MIVisionX'
-else:
-	buildDir_MIVisionX = buildDir+'MIVisionX'
-
-MIVisionX_dir = os.path.expanduser(buildDir_MIVisionX)
-
 
 def shell(cmd):
 
