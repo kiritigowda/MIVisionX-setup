@@ -64,7 +64,8 @@ python scripts/MIVision-profile.py  -d [build directory - required]
 usage:
 
 ````
-python scripts/MIVision-generateFullReport.py
+python scripts/MIVision-generateFullReport.py -d [build directory - required]
+                                              -m [profile mode - optional (level 1-6, default:2)]
 ```` 
 
 ## outputs
