@@ -1,8 +1,8 @@
 __author__      = "Kiriti Nagesh Gowda"
-__copyright__   = "Copyright 2018, AMD MIVisionX Platform Report"
+__copyright__   = "Copyright 2018 - 2020, AMD MIVisionX Platform Report"
 __credits__     = ["Aguren, Derrick"]
 __license__     = "MIT"
-__version__     = "0.9.5"
+__version__     = "0.9.6"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "beta"
@@ -154,6 +154,6 @@ if __name__ == "__main__":
         write_formatted(lib_tree, f)
         f.write("\n")
 
-        f.write("\n\n---\nCopyright AMD 2018\n")
+        f.write("\n\n---\nCopyright AMD 2018 - 2020 -- generatePlatformReport.py V-"+__version__+"\n")
 
     exit(0)
