@@ -37,9 +37,17 @@ python MIVisionX-build.py --directory [setup directory - optional]
 ````
 **Note:** use `--cmake cmake3` for **CentOS**
 
+3. **MIVisionX-generatePlatformReport.py** - This Scripts generates the platfrom report for the system.
+
+usage:
+
+````
+python scripts/MIVision-generatePlatformReport.py
+```` 
+
 ## **Note** - `The steps below are only for developers with access to AMD developer server`
 
-3. **MIVisionX-profile.py** - This script downloads the caffe .models & .prototxt from a remote file server and runs every model with different batch sizes and dumps an output.log file, profile.csv & profile.txt. The build directory should be the same director passed to the MIVision-build.py script. If no directory was given, pass '~/' for the directory option. 
+4. **MIVisionX-profile.py** - This script downloads the caffe .models & .prototxt from a remote file server and runs every model with different batch sizes and dumps an output.log file, profile.csv & profile.txt. The build directory should be the same director passed to the MIVision-build.py script. If no directory was given, pass '~/' for the directory option. 
 
 usage:
 
@@ -50,13 +58,6 @@ python scripts/MIVision-profile.py  -d [build directory - required]
                                     -f [MIOPEN_FIND_ENFORCE mode - optional (level 1-5, default:1)]
 ```` 
 
-4. **MIVisionX-generatePlatformReport.py** - This Scripts generates the platfrom report for the system.
-
-usage:
-
-````
-python scripts/MIVision-generatePlatformReport.py
-```` 
 
 5. **MIVisionX-generateFullReport.py** - This Scripts generates the platfrom report & benchmark reports for the system.
 
