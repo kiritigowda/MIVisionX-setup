@@ -70,19 +70,11 @@ def strip_libtree_addresses(lib_tree):
 
 if __name__ == "__main__":
 
-	# generate annie .so
-    logOutput = shell ('mkdir '+buildDir_MIVisionX+'/buildLog')
-    logOutput = shell ('cd '+buildDir_MIVisionX+'/buildLog')
-    logOutput = shell ('python '+buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python/caffe2nnir.py '+buildDir_MIVisionX+'/caffeModels/resnet50/resnet50.caffemodel '+buildDir_MIVisionX+'/buildLog/resnet50 --input-dims 1,3,224,224')
-    logOutput = shell ('python '+buildDir_MIVisionX+'/amdovx-modules/utils/model_compiler/python/nnir2openvx.py '+buildDir_MIVisionX+'/buildLog/resnet50 '+buildDir_MIVisionX+'/buildLog/resnet50-build')
-    logOutput = shell ('(cd '+buildDir_MIVisionX+'/buildLog/resnet50-build/;cmake .;make)')
-
     # report configuration
     out_filename_time = False
-    path_to_so = buildDir_MIVisionX+'/buildLog/resnet50-build/libannmodule.so'
+    path_to_so = '/opt/rocm/mivisionx/lib/*'
 
     # get data
-
     platform_name = shell('hostname')
     platform_name_fq = shell('hostname --all-fqdns')
     platform_ip = shell('hostname -I')[0:-1] # extra trailing space
