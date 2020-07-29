@@ -20,8 +20,11 @@ This folder has the following python scripts
 ````
 python MIVisionX-setup.py --directory [setup directory - optional]
                           --installer [Package management tool - optional (default:apt-get) [options: Ubuntu:apt-get;CentOS:yum]]
-                          --miopen    [MIOpen Version - optional (default:1.8.1)]
+                          --miopen    [MIOpen Version - optional (default:2.5.0)]
+                          --miopengemm[MIOpenGEMM Version - optional (default:1.1.5)]
                           --ffmpeg    [FFMPEG Installation - optional (default:no) [options:Install ffmpeg - yes]]
+                          --rpp       [RPP Installation - optional (default:yes) [options:yes/no]]
+                          --reinstall [Remove previous setup and reinstall (default:no)[options:yes/no]]
 ````
 **Note:** use `--installer yum` for **CentOS**
 
@@ -52,7 +55,7 @@ python scripts/MIVision-profile.py  -d [build directory - required]
 usage:
 
 ````
-python scripts/MIVision-generatePlatformReport.py -d [build directory - required]
+python scripts/MIVision-generatePlatformReport.py
 ```` 
 
 5. **MIVisionX-generateFullReport.py** - This Scripts generates the platfrom report & benchmark reports for the system.
@@ -60,7 +63,7 @@ python scripts/MIVision-generatePlatformReport.py -d [build directory - required
 usage:
 
 ````
-python scripts/MIVision-generateFullReport.py -d [build directory - required]
+python scripts/MIVision-generateFullReport.py
 ```` 
 
 ## outputs
