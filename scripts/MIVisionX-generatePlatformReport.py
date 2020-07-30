@@ -2,10 +2,10 @@ __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018 - 2020, AMD MIVisionX Platform Report"
 __credits__     = ["Aguren, Derrick"]
 __license__     = "MIT"
-__version__     = "0.9.8"
+__version__     = "1.0.0"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
-__status__      = "beta"
+__status__      = "Shipping"
 
 from subprocess import Popen, PIPE
 from datetime import datetime
