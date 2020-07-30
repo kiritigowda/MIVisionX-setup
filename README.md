@@ -18,7 +18,7 @@ This folder has the following python scripts
 
 **usage:**
 ````
-python MIVisionX-setup.py --directory [setup directory - optional]
+python MIVisionX-setup.py --directory [setup directory - optional (default:~/)]
                           --installer [Package management tool - optional (default:apt-get) [options: Ubuntu:apt-get;CentOS:yum]]
                           --miopen    [MIOpen Version - optional (default:2.5.0)]
                           --miopengemm[MIOpenGEMM Version - optional (default:1.1.5)]
@@ -32,7 +32,7 @@ python MIVisionX-setup.py --directory [setup directory - optional]
 
 **usage:**
 ````
-python MIVisionX-build.py --directory [setup directory - optional]
+python MIVisionX-build.py --directory [Build directory - optional (default:~/)]
                           --cmake     [Linux cmake - optional (default:cmake) [options:Ubuntu - cmake; CentOS - cmake3]]  
 ````
 **Note:** use `--cmake cmake3` for **CentOS**
@@ -52,7 +52,7 @@ python scripts/MIVision-generatePlatformReport.py
 usage:
 
 ````
-python scripts/MIVision-profile.py  -d [build directory - required]
+python scripts/MIVision-profile.py  -d [build directory - required (directory used in MIVisionX-build.py)]
                                     -l [profile level - optional (level 1-8, default:7)]
                                     -m [profile mode - optional (level 1-6, default:2)]
                                     -f [MIOPEN_FIND_ENFORCE mode - optional (level 1-5, default:1)]
@@ -64,8 +64,8 @@ python scripts/MIVision-profile.py  -d [build directory - required]
 usage:
 
 ````
-python scripts/MIVision-generateFullReport.py --directory [MIVisionX-profile.py directory - optional (default:~/)]
-                                              --mode      [MIVisionX-profile.py mode used - optional (default: 1))]
+python scripts/MIVision-generateFullReport.py --directory [Directory used in MIVisionX-profile.py - optional (default:~/)]
+                                              --mode      [Mode used in MIVisionX-profile.py      - optional (default: 1))]
 ````
 
 ## outputs
