@@ -59,14 +59,14 @@ python scripts/MIVision-profile.py  -d [build directory - required]
 ```` 
 
 
-5. **MIVisionX-generateFullReport.py** - This Scripts generates the platfrom report & benchmark reports for the system.
+5. **MIVisionX-generateFullReport.py** - This Scripts generates the platform report & benchmark reports for the system.
 
 usage:
 
 ````
-python scripts/MIVision-generateFullReport.py -d [build directory - required]
-                                              -m [profile mode - optional (level 1-6, default:2)]
-```` 
+python scripts/MIVision-generateFullReport.py --directory [MIVisionX-profile.py directory - optional (default:~/)]
+                                              --mode      [MIVisionX-profile.py mode used - optional (default: 1))]
+````
 
 ## outputs
 * The MIVision-profile.py will generate profile.txt and profile.csv.
