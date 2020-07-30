@@ -1,13 +1,13 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-# MIVisionX
+<p align="center"><img width="70%" src="https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX/blob/master/docs/images/MIVisionX.png?raw=true" /></p>
 
-This project contains scripts to setup, build, and profile AMD Radeon MIVisionX. The open source GitHub project can be found at [MIVisionX](https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX)
+This project contains scripts to setup, build, and profile AMD ROCm MIVisionX. The open source GitHub project can be found at [MIVisionX](https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX)
 
 For convenience of the developer, we here provide the scripts which will install all the dependencies required by this project and clone the project from GitHub to build and install MIVisionX on your system.
 
 ## Prerequisites for running the script
-1. Ubuntu `16.04`/`18.04` or CentOS `7.5`/`7.6`
+1. Ubuntu `16.04`/`18.04`/`20.04` or CentOS `7.5`/`7.6`/`8.1`
 2. [ROCm supported hardware](https://rocm.github.io/hardware.html)
 3. [ROCm](https://github.com/RadeonOpenCompute/ROCm#installing-from-amd-rocm-repositories)
 
