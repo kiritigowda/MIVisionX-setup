@@ -2,15 +2,12 @@ __author__      = "Kiriti Nagesh Gowda"
 __copyright__   = "Copyright 2018 - 2020, AMD MIVisionX Platform Report"
 __credits__     = ["Aguren, Derrick"]
 __license__     = "MIT"
-__version__     = "0.9.7"
+__version__     = "0.9.8"
 __maintainer__  = "Kiriti Nagesh Gowda"
 __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "beta"
 
-import os
-import getopt
-import sys
-from subprocess import Popen, PIPE, STDOUT
+from subprocess import Popen, PIPE
 from datetime import datetime
 
 def shell(cmd):
@@ -51,7 +48,7 @@ def strip_libtree_addresses(lib_tree):
 if __name__ == "__main__":
 
     # report configuration
-    out_filename_time = False
+    # out_filename_time = False
     path_to_so = '/opt/rocm/mivisionx/lib/*'
 
     # get data
@@ -59,10 +56,10 @@ if __name__ == "__main__":
     platform_name_fq = shell('hostname --all-fqdns')
     platform_ip = shell('hostname -I')[0:-1] # extra trailing space
 
-    if out_filename_time:
-        file_dtstr = datetime.now().strftime("%Y%m%d-%H%M%S")
-    else:
-        file_dtstr = datetime.now().strftime("%Y%m%d")
+    #if out_filename_time:
+        #file_dtstr = datetime.now().strftime("%Y%m%d-%H%M%S")
+    #else:
+    file_dtstr = datetime.now().strftime("%Y%m%d")
 
     report_filename = 'platform_report_%s_%s.md' % (platform_name, file_dtstr)
 
@@ -92,8 +89,8 @@ if __name__ == "__main__":
 
     with open(report_filename, 'w') as f:
 
-        f.write("Platform Report\n")
-        f.write("=====================\n")
+        f.write("ROCm MIVisionX - Platform Report\n")
+        f.write("================================\n")
         f.write("\n")
 
         f.write("Generated: %s\n" % report_dtstr)
@@ -134,6 +131,6 @@ if __name__ == "__main__":
         write_formatted(lib_tree, f)
         f.write("\n")
 
-        f.write("\n\n---\nCopyright AMD 2018 - 2020 -- generatePlatformReport.py V-"+__version__+"\n")
+        f.write("\n\n---\nCopyright AMD ROCm MIVisionX 2018 - 2020 -- generatePlatformReport.py V-"+__version__+"\n")
 
     exit(0)
