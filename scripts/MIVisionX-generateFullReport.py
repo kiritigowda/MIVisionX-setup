@@ -8,7 +8,6 @@ __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "Shipping"
 
 import os
-import sys
 import argparse
 from subprocess import Popen, PIPE
 from datetime import datetime
@@ -27,7 +26,7 @@ if buildDir == '':
 else:
     buildDir_MIVisionX = buildDir+'MIVisionX'
 
-AMDOVX_dir = os.path.expanduser(buildDir_MIVisionX)
+MIVisionX_dev_dir = os.path.expanduser(buildDir_MIVisionX)
 
 def shell(cmd):
 
@@ -69,7 +68,7 @@ if __name__ == "__main__":
     # report configuration
     #out_filename_time = False
     if profileMode == 1 or profileMode == 2 or profileMode == 3:
-        path_to_so = buildDir_MIVisionX+'/develop/caffe-folder/googlenet/nnir_build_1/libannmodule.so'
+        path_to_so = MIVisionX_dev_dir+'/develop/caffe-folder/googlenet/nnir_build_1/libannmodule.so'
     else:
         print("\nERROR - Dynamic Library List Implemented only for MODE - 1, 2, & 3 : OTHER MODES TBD\n")
 
@@ -122,31 +121,31 @@ if __name__ == "__main__":
         f.write("\n")
         if profileMode == 1:
             f.write("\n CAFFE to NNIR to OpenVX - noFuse profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/caffe2nnir2openvx_noFuse_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/caffe2nnir2openvx_noFuse_profile.md'
         if profileMode == 2:
             f.write("\n CAFFE to NNIR to OpenVX - Fuse profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fuse_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/caffe2nnir2openvx_fuse_profile.md'
         if profileMode == 3:
             f.write("\n CAFFE to NNIR to OpenVX - FP16 profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fp16_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/caffe2nnir2openvx_fp16_profile.md'
         if profileMode == 4:
             f.write("\n ONNX to NNIR to OpenVX - noFuse profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/onnx2nnir2openvx_noFuse_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/onnx2nnir2openvx_noFuse_profile.md'
         if profileMode == 5:
             f.write("\n ONNX to NNIR to OpenVX - Fuse profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fuse_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/onnx2nnir2openvx_fuse_profile.md'
         if profileMode == 6:
             f.write("\n ONNX to NNIR to OpenVX - FP16 profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fp16_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/onnx2nnir2openvx_fp16_profile.md'
         if profileMode == 7:
             f.write("\n NNEF to NNIR to OpenVX - noFuse profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/nnef2nnir2openvx_noFuse_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/nnef2nnir2openvx_noFuse_profile.md'
         if profileMode == 8:
             f.write("\n NNEF to NNIR to OpenVX - Fuse profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/nnef2nnir2openvx_fuse_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/nnef2nnir2openvx_fuse_profile.md'
         if profileMode == 9:
             f.write("\n NNEF to NNIR to OpenVX - FP16 profile \n\n")
-            profileReportFile = buildDir_MIVisionX+'/develop/nnef2nnir2openvx_fp16_profile.md'
+            profileReportFile = MIVisionX_dev_dir+'/develop/nnef2nnir2openvx_fp16_profile.md'
         
         with open(profileReportFile) as benchmarkFile:
             for line in benchmarkFile:
