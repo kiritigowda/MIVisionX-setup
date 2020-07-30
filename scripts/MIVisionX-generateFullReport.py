@@ -122,33 +122,35 @@ if __name__ == "__main__":
         f.write("\n")
         if profileMode == 1:
             f.write("\n CAFFE to NNIR to OpenVX - noFuse profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_noFuse_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/caffe2nnir2openvx_noFuse_profile.md'
         if profileMode == 2:
             f.write("\n CAFFE to NNIR to OpenVX - Fuse profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fuse_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fuse_profile.md'
         if profileMode == 3:
             f.write("\n CAFFE to NNIR to OpenVX - FP16 profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fp16_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/caffe2nnir2openvx_fp16_profile.md'
         if profileMode == 4:
             f.write("\n ONNX to NNIR to OpenVX - noFuse profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/onnx2nnir2openvx_noFuse_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/onnx2nnir2openvx_noFuse_profile.md'
         if profileMode == 5:
             f.write("\n ONNX to NNIR to OpenVX - Fuse profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fuse_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fuse_profile.md'
         if profileMode == 6:
             f.write("\n ONNX to NNIR to OpenVX - FP16 profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fp16_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/onnx2nnir2openvx_fp16_profile.md'
         if profileMode == 7:
             f.write("\n NNEF to NNIR to OpenVX - noFuse profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/nnef2nnir2openvx_noFuse_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/nnef2nnir2openvx_noFuse_profile.md'
         if profileMode == 8:
             f.write("\n NNEF to NNIR to OpenVX - Fuse profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/nnef2nnir2openvx_fuse_profile.md') as benchmarkFile:
+            profileReportFile = buildDir_MIVisionX+'/develop/nnef2nnir2openvx_fuse_profile.md'
         if profileMode == 9:
             f.write("\n NNEF to NNIR to OpenVX - FP16 profile \n\n")
-            with open(buildDir_MIVisionX+'/develop/nnef2nnir2openvx_fp16_profile.md') as benchmarkFile:
-                for line in benchmarkFile:
-                    f.write("%s" % line)
+            profileReportFile = buildDir_MIVisionX+'/develop/nnef2nnir2openvx_fp16_profile.md'
+        
+        with open(profileReportFile) as benchmarkFile:
+            for line in benchmarkFile:
+                f.write("%s" % line)
 
         f.write("\n")
         f.write("\n")
