@@ -7,7 +7,6 @@ __email__       = "Kiriti.NageshGowda@amd.com"
 __status__      = "beta"
 
 import argparse
-import commands
 import os
 
 # Import arguments

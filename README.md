@@ -1,4 +1,5 @@
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/kiritigowda/MIVisionX-setup.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/kiritigowda/MIVisionX-setup/context:python)
 
 <p align="center"><img width="70%" src="https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX/blob/master/docs/images/MIVisionX.png?raw=true" /></p>
 
