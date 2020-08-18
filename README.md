@@ -21,10 +21,14 @@ This folder has the following python scripts
 ````
 python MIVisionX-setup.py --directory [setup directory - optional (default:~/)]
                           --installer [Package management tool - optional (default:apt-get) [options: Ubuntu:apt-get;CentOS:yum]]
+                          --opencv    [OpenCV Version - optional (default:3.4.0)]
                           --miopen    [MIOpen Version - optional (default:2.5.0)]
                           --miopengemm[MIOpenGEMM Version - optional (default:1.1.5)]
-                          --ffmpeg    [FFMPEG Installation - optional (default:no) [options:Install ffmpeg - yes]]
-                          --rpp       [RPP Installation - optional (default:yes) [options:yes/no]]
+                          --protobuf  [ProtoBuf Version - optional (default:3.12.0)]
+                          --rpp       [RPP Version - optional (default:0.4)]
+                          --ffmpeg    [FFMPEG Installation - optional (default:no) [options:yes/no]]
+                          --rali      [MIVisionX RALI Dependency Install - optional (default:yes) [options:yes/no]]
+                          --neural_net[MIVisionX Neural Net Dependency Install - optional (default:yes) [options:yes/no]]
                           --reinstall [Remove previous setup and reinstall (default:no)[options:yes/no]]
 ````
 **Note:** use `--installer yum` for **CentOS**
