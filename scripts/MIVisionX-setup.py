@@ -133,9 +133,9 @@ if(os.path.exists(deps_dir)):
 	print("\nMIVisionX Dependencies Installed with MIVisionX-setup.py V-"+__version__+"\n")
 else:
 	print("\nMIVisionX Dependencies Installation with MIVisionX-setup.py V-"+__version__+"\n")
+	os.system('mkdir '+deps_dir)
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake git wget unzip')
-	os.system('(cd '+setupDir+'; mkdir mivisionx-deps)')
 	# Get Installation Source
 	os.system('(cd '+deps_dir+'; wget https://github.com/opencv/opencv/archive/'+opencvVersion+'.zip )')
 	os.system('(cd '+deps_dir+'; unzip '+opencvVersion+'.zip )')
