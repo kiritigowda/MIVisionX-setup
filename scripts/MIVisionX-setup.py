@@ -42,7 +42,7 @@ parser.add_argument('--opencv',    	type=str, default='3.4.0',   			help='OpenCV
 parser.add_argument('--miopen',    	type=str, default='2.5.0',   			help='MIOpen Version - optional (default:2.5.0)')
 parser.add_argument('--miopengemm',	type=str, default='1.1.5',   			help='MIOpenGEMM Version - optional (default:1.1.5)')
 parser.add_argument('--protobuf',  	type=str, default='3.12.0',  			help='ProtoBuf Version - optional (default:3.12.0)')
-parser.add_argument('--rpp_ver',   	type=str, default='0.4',     			help='RPP Version - optional (default:0.4)')
+parser.add_argument('--rpp',   		type=str, default='0.4',     			help='RPP Version - optional (default:0.4)')
 parser.add_argument('--ffmpeg',    	type=str, default='no',      			help='FFMPEG Installation - optional (default:no) [options:yes/no]')
 parser.add_argument('--neural_net',	type=str, default='yes',     			help='MIVisionX Neural Net Dependency Install - optional (default:yes) [options:yes/no]')
 parser.add_argument('--rali',	 	type=str, default='yes',     			help='MIVisionX RALI Dependency Install - optional (default:yes) [options:yes/no]')
@@ -55,7 +55,7 @@ opencvVersion = args.opencv
 MIOpenVersion = args.miopen
 MIOpenGEMMVersion = args.miopengemm
 ProtoBufVersion = args.protobuf
-rppVersion = args.rpp_ver
+rppVersion = args.rpp
 ffmpegInstall = args.ffmpeg
 neuralNetInstall = args.neural_net
 raliInstall = args.rali
