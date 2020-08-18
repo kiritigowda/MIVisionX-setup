@@ -134,6 +134,8 @@ if(os.path.exists(deps_dir)):
 else:
 	print("\nMIVisionX Dependencies Installation with MIVisionX-setup.py V-"+__version__+"\n")
 	os.system('mkdir '+deps_dir)
+	# Create Build folder
+	os.system('(cd '+deps_dir+'; mkdir build )')
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install cmake git wget unzip')
 	# Get Installation Source
@@ -150,8 +152,7 @@ else:
 		os.system('(cd '+deps_dir+'; unzip v'+ProtoBufVersion+'.zip )')
 	if ffmpegInstall == 'yes':
 		os.system('(cd '+deps_dir+'; git clone --recursive -b n4.0.4 https://git.ffmpeg.org/ffmpeg.git )')
-	# Create Build folder
-	os.system('(cd '+deps_dir+'; mkdir build )')
+	# Install
 	if neuralNetInstall == 'yes':
 		# Install half.hpp
 		os.system('(cd '+deps_dir+'; wget https://sourceforge.net/projects/half/files/half/1.12.0/half-1.12.0.zip )')
