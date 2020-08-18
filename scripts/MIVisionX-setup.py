@@ -154,13 +154,13 @@ else:
 		os.system('(cd '+deps_dir+'; git clone --recursive -b n4.0.4 https://git.ffmpeg.org/ffmpeg.git )')
 	# Install
 	if neuralNetInstall == 'yes':
+		os.system('(cd '+deps_dir+'/build; mkdir rocm-cmake MIOpenGEMM MIOpen)')
 		# Install half.hpp
 		os.system('(cd '+deps_dir+'; wget https://sourceforge.net/projects/half/files/half/1.12.0/half-1.12.0.zip )')
 		os.system('(cd '+deps_dir+'; unzip half-1.12.0.zip -d half-files )')
 		os.system('sudo -v')
 		os.system('(cd '+deps_dir+'; sudo cp half-files/include/half.hpp /usr/local/include/ )')
 		# Install ROCm-CMake
-		os.system('(cd '+deps_dir+'/build; mkdir rocm-cmake MIOpenGEMM MIOpen OpenCV )')
 		os.system('(cd '+deps_dir+'/build/rocm-cmake; '+linuxCMake+' ../../rocm-cmake )')
 		os.system('(cd '+deps_dir+'/build/rocm-cmake; make -j8 )')
 		os.system('sudo -v')
@@ -212,6 +212,7 @@ else:
 		os.system('sudo -v')
 		os.system('sudo '+linuxFlag+' yes | pip install numpy')
 	# Install OpenCV
+	os.system('(cd '+deps_dir+'/build; mkdir OpenCV )')
 	os.system('sudo -v')
 	os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check+' install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev')
 	os.system('sudo -v')
