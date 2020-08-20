@@ -182,6 +182,14 @@ else:
         os.system(
             '(cd '+deps_dir+'; git clone --recursive -b n4.0.4 https://git.ffmpeg.org/ffmpeg.git )')
     # Install
+    if raliInstall == 'yes' or neuralNetInstall == 'yes':
+        # Install half.hpp
+        os.system(
+            '(cd '+deps_dir+'; wget https://sourceforge.net/projects/half/files/half/1.12.0/half-1.12.0.zip )')
+        os.system('(cd '+deps_dir+'; unzip half-1.12.0.zip -d half-files )')
+        os.system('sudo -v')
+        os.system(
+            '(cd '+deps_dir+'; sudo cp half-files/include/half.hpp /usr/local/include/ )')
     if neuralNetInstall == 'yes':
         os.system('(cd '+deps_dir+'/build; mkdir rocm-cmake MIOpenGEMM MIOpen)')
         # Install ROCm-CMake
@@ -226,13 +234,6 @@ else:
         os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y ' +
                   linuxSystemInstall_check+' install qt5-default qtcreator')
     if raliInstall == 'yes' or neuralNetInstall == 'yes':
-        # Install half.hpp
-        os.system(
-            '(cd '+deps_dir+'; wget https://sourceforge.net/projects/half/files/half/1.12.0/half-1.12.0.zip )')
-        os.system('(cd '+deps_dir+'; unzip half-1.12.0.zip -d half-files )')
-        os.system('sudo -v')
-        os.system(
-            '(cd '+deps_dir+'; sudo cp half-files/include/half.hpp /usr/local/include/ )')
         # Install ProtoBuf
         os.system('sudo -v')
         os.system('(cd '+deps_dir+'/protobuf-'+ProtoBufVersion+'; sudo '+linuxFlag+' '+linuxSystemInstall +
