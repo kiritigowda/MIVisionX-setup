@@ -1,5 +1,5 @@
 import os
-import getoptf
+import getopt
 import sys
 
 __author__      = "Kiriti Nagesh Gowda"
