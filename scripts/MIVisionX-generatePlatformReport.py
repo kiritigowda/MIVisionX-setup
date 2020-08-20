@@ -1,14 +1,14 @@
-__author__      = "Kiriti Nagesh Gowda"
-__copyright__   = "Copyright 2018 - 2020, AMD MIVisionX Platform Report"
-__credits__     = ["Aguren, Derrick"]
-__license__     = "MIT"
-__version__     = "1.0.0"
-__maintainer__  = "Kiriti Nagesh Gowda"
-__email__       = "Kiriti.NageshGowda@amd.com"
-__status__      = "Shipping"
-
-from subprocess import Popen, PIPE
 from datetime import datetime
+from subprocess import Popen, PIPE
+
+__author__ = "Kiriti Nagesh Gowda"
+__copyright__ = "Copyright 2018 - 2020, AMD MIVisionX Platform Report"
+__credits__ = ["Aguren, Derrick"]
+__license__ = "MIT"
+__version__ = "1.0.0"
+__maintainer__ = "Kiriti Nagesh Gowda"
+__email__ = "Kiriti.NageshGowda@amd.com"
+__status__ = "Shipping"
 
 def shell(cmd):
 
@@ -17,11 +17,13 @@ def shell(cmd):
 
     return output
 
+
 def write_formatted(output, f):
 
     f.write("````\n")
     f.write("%s\n\n" % output)
     f.write("````\n")
+
 
 def write_lines_as_table(header, lines, f):
 
@@ -41,9 +43,11 @@ def write_lines_as_table(header, lines, f):
             f.write("|%s" % field)
         f.write("|\n")
 
+
 def strip_libtree_addresses(lib_tree):
 
     return lib_tree
+
 
 if __name__ == "__main__":
 
@@ -54,11 +58,11 @@ if __name__ == "__main__":
     # get data
     platform_name = shell('hostname')
     platform_name_fq = shell('hostname --all-fqdns')
-    platform_ip = shell('hostname -I')[0:-1] # extra trailing space
+    platform_ip = shell('hostname -I')[0:-1]  # extra trailing space
 
-    #if out_filename_time:
-        #file_dtstr = datetime.now().strftime("%Y%m%d-%H%M%S")
-    #else:
+    # if out_filename_time:
+    #file_dtstr = datetime.now().strftime("%Y%m%d-%H%M%S")
+    # else:
     file_dtstr = datetime.now().strftime("%Y%m%d")
 
     report_filename = 'platform_report_%s_%s.md' % (platform_name, file_dtstr)
@@ -68,12 +72,12 @@ if __name__ == "__main__":
     sys_info = shell('inxi -c0 -S')
 
     cpu_info = shell('inxi -c0 -C')
-    cpu_info = cpu_info.split('\n')[0] # strip out clock speeds
+    cpu_info = cpu_info.split('\n')[0]  # strip out clock speeds
 
     gpu_info = shell('inxi -c0 -G')
-    gpu_info = gpu_info.split('\n')[0] # strip out X info
+    gpu_info = gpu_info.split('\n')[0]  # strip out X info
 
-    memory_info = shell ('sudo inxi -c 0 -m')
+    memory_info = shell('sudo inxi -c 0 -m')
     board_info = shell('inxi -c0 -M')
 
     lib_tree = shell('ldd -v %s' % path_to_so)
@@ -83,7 +87,7 @@ if __name__ == "__main__":
 
     rocmInfo = shell('(cd /opt/rocm/bin/; ./rocm-smi -a)')
 
-    rocm_packages = shell('dpkg-query -W | grep rocm').split('\n')    
+    rocm_packages = shell('dpkg-query -W | grep rocm').split('\n')
 
     # write report
 
