@@ -64,7 +64,6 @@ usage:
 
 ``` 
 python scripts/MIVision-profile.py  -d [build directory - required (directory used in MIVisionX-build.py)]
-
                                     -l [profile level - optional (level 1-8, default:7)]
                                     -m [profile mode - optional (level 1-6, default:2)]
                                     -f [MIOPEN_FIND_ENFORCE mode - optional (level 1-5, default:1)]
@@ -76,7 +75,6 @@ usage:
 
 ``` 
 python scripts/MIVision-generateFullReport.py --directory [Directory used in MIVisionX-profile.py - optional (default:~/)]
-
                                               --mode      [Mode used in MIVisionX-profile.py      - optional (default: 1))]
 ```
 
