@@ -213,6 +213,10 @@ else:
         os.system('(cd '+deps_dir+'/build/rocm-cmake; sudo ' +
                   linuxFlag+' make install )')
         # Install MIOpenGEMM
+        # package dependencies 
+        os.system('sudo -v')
+        os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y ' +
+                  linuxSystemInstall_check+' install sqlite3')
         os.system('(cd '+deps_dir+'/build/MIOpenGEMM; '+linuxCMake +
                   ' ../../MIOpenGEMM-'+MIOpenGEMMVersion+' )')
         os.system('(cd '+deps_dir+'/build/MIOpenGEMM; make -j8 )')
