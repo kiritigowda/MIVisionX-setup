@@ -216,7 +216,7 @@ else:
         # package dependencies 
         os.system('sudo -v')
         os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y ' +
-                  linuxSystemInstall_check+' install sqlite3')
+                  linuxSystemInstall_check+' install sqlite3 libsqlite3-dev libbz2-dev')
         os.system('(cd '+deps_dir+'/build/MIOpenGEMM; '+linuxCMake +
                   ' ../../MIOpenGEMM-'+MIOpenGEMMVersion+' )')
         os.system('(cd '+deps_dir+'/build/MIOpenGEMM; make -j8 )')
