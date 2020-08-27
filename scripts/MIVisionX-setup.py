@@ -169,7 +169,7 @@ else:
     os.system('(cd '+deps_dir+'; mkdir build )')
     os.system('sudo -v')
     os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y ' +
-              linuxSystemInstall_check+' install cmake git wget unzip')
+              linuxSystemInstall_check+' install cmake git wget unzip pkg-config')
     # Get Installation Source
     os.system(
         '(cd '+deps_dir+'; wget https://github.com/opencv/opencv/archive/'+opencvVersion+'.zip )')
@@ -277,7 +277,7 @@ else:
     os.system('(cd '+deps_dir+'/build; mkdir OpenCV )')
     os.system('sudo -v')
     os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check +
-              ' install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev')
+              ' install build-essential cmake git libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev')
     os.system('sudo -v')
     os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y '+linuxSystemInstall_check +
               ' install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libdc1394-22-dev')
