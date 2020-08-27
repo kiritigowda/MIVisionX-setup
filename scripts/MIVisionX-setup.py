@@ -25,7 +25,7 @@ import argparse
 __author__ = "Kiriti Nagesh Gowda"
 __copyright__ = "Copyright 2018 - 2020, AMD Radeon MIVisionX setup"
 __license__ = "MIT"
-__version__ = "1.8.1"
+__version__ = "1.8.2"
 __maintainer__ = "Kiriti Nagesh Gowda"
 __email__ = "Kiriti.NageshGowda@amd.com"
 __status__ = "Shipping"
@@ -306,7 +306,7 @@ else:
             # clang+boost
             os.system('sudo -v')
             os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' -y ' +
-                      linuxSystemInstall_check+' install libboost-all-dev clang')
+                      linuxSystemInstall_check+' install clang')
             # turbo-JPEG
             os.system(
                 '(cd '+deps_dir+'; git clone -b 2.0.4 https://github.com/Indumathi31/libjpeg-turbo.git )')
