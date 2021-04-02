@@ -75,7 +75,7 @@ if __name__ == "__main__":
     cpu_info = cpu_info.split('\n')[0]  # strip out clock speeds
 
     gpu_info = shell('inxi -c0 -G')
-    gpu_info = gpu_info.split('\n')[0]  # strip out X info
+    #gpu_info = gpu_info.split('\n')[0]  # strip out X info
 
     memory_info = shell('sudo inxi -c 0 -m')
     board_info = shell('inxi -c0 -M')
