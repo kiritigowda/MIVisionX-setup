@@ -24,7 +24,7 @@ This folder has the following python scripts
 **usage:**
 
   ```
-  python3 MIVisionX-setup.py --directory [setup directory - optional (default:~/)]
+  python MIVisionX-setup.py --directory [setup directory - optional (default:~/)]
                             --opencv    [OpenCV Version - optional (default:4.5.5)]
                             --protobuf  [ProtoBuf Version - optional (default:3.12.0)]
                             --rpp       [RPP Version - optional (default:0.91)]
