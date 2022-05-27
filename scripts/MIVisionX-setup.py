@@ -30,7 +30,7 @@ else:
 __author__ = "Kiriti Nagesh Gowda"
 __copyright__ = "Copyright 2018 - 2022, AMD ROCm MIVisionX"
 __license__ = "MIT"
-__version__ = "2.1.1"
+__version__ = "2.3.0"
 __maintainer__ = "Kiriti Nagesh Gowda"
 __email__ = "mivisionx.support@amd.com"
 __status__ = "Shipping"
@@ -41,10 +41,6 @@ parser.add_argument('--directory', 	type=str, default='~/mivisionx-deps',
                     help='Setup home directory - optional (default:~/)')
 parser.add_argument('--opencv',    	type=str, default='4.5.5',
                     help='OpenCV Version - optional (default:4.5.5)')
-parser.add_argument('--miopen',    	type=str, default='2.14.0',
-                    help='MIOpen Version - optional (default:2.14.0)')
-parser.add_argument('--miopengemm',	type=str, default='1.1.5',
-                    help='MIOpenGEMM Version - optional (default:1.1.5)')
 parser.add_argument('--protobuf',  	type=str, default='3.12.0',
                     help='ProtoBuf Version - optional (default:3.12.0)')
 parser.add_argument('--rpp',   		type=str, default='0.93',
@@ -58,15 +54,13 @@ parser.add_argument('--rocal',	 	type=str, default='yes',
 parser.add_argument('--reinstall', 	type=str, default='no',
                     help='Remove previous setup and reinstall - optional (default:no) [options:yes/no]')
 parser.add_argument('--backend', 	type=str, default='HIP',
-                    help='MIVisionX Dependency Backend - optional (default:HIP) [options:OCL/HIP]')
+                    help='MIVisionX Dependency Backend - optional (default:HIP) [options:CPU/OCL/HIP]')
 parser.add_argument('--rocm_path', 	type=str, default='/opt/rocm',
                     help='ROCm Installation Path - optional (default:/opt/rocm) - ROCm Installation Required')
 args = parser.parse_args()
 
 setupDir = args.directory
 opencvVersion = args.opencv
-MIOpenVersion = args.miopen
-MIOpenGEMMVersion = args.miopengemm
 ProtoBufVersion = args.protobuf
 rppVersion = args.rpp
 ffmpegInstall = args.ffmpeg
@@ -92,9 +86,9 @@ if reinstall not in ('no', 'yes'):
     print(
         "ERROR: Re-Install Option Not Supported - [Supported Options: no or yes]")
     exit()
-if backend not in ('OCL', 'HIP'):
+if backend not in ('OCL', 'HIP', 'CPU'):
     print(
-        "ERROR: Backend Option Not Supported - [Supported Options: OCL or HIP]")
+        "ERROR: Backend Option Not Supported - [Supported Options: CPU or OCL or HIP]")
     exit()
 
 # check ROCm installation
@@ -183,38 +177,34 @@ if os.path.exists(deps_dir):
         os.system('(cd '+deps_dir+'/build/OpenCV; sudo ' +
                   linuxFlag+' make install -j8)')
 
-    if neuralNetInstall == 'yes':
-        # rocm-cmake
-        if os.path.exists(deps_dir+'/build/rocm-cmake'):
+    if neuralNetInstall == 'yes' and backend != 'CPU':
+        if backend == 'OCL':
             os.system('sudo -v')
-            os.system('(cd '+deps_dir+'/build/rocm-cmake; sudo ' +
-                      linuxFlag+' make install -j8)')
-        # MIOpenGEMM
-        if os.path.exists(deps_dir+'/build/MIOpenGEMM'):
-            os.system('sudo -v')
-            os.system('(cd '+deps_dir+'/build/MIOpenGEMM; sudo ' +
-                      linuxFlag+' make install -j8)')
-        # MIOpen
-        if os.path.exists(deps_dir+'/build/MIOpen*'):
-            os.system('sudo -v')
-            os.system('(cd '+deps_dir+'/build/MIOpen*; sudo ' +
-                      linuxFlag+' make install -j8)')
+            os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' ' +
+                      linuxSystemInstall_check+' autoremove miopen-hip migraphx')
+            os.system('sudo '+linuxFlag+' '+linuxSystemInstall +
+                      ' '+linuxSystemInstall_check+' install -y miopen-opencl')
+        else:
+            os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' ' +
+                      linuxSystemInstall_check+' autoremove miopen-opencl')
+            os.system('sudo '+linuxFlag+' '+linuxSystemInstall +
+                      ' '+linuxSystemInstall_check+' install -y miopen-hip migraphx')
 
-    if raliInstall == 'yes' or neuralNetInstall == 'yes':
+    if (raliInstall == 'yes' or neuralNetInstall == 'yes') and backend != 'CPU':
         # ProtoBuf
         if os.path.exists(deps_dir+'/protobuf-'+ProtoBufVersion):
             os.system('sudo -v')
             os.system('(cd '+deps_dir+'/protobuf-'+ProtoBufVersion +
                       '; sudo '+linuxFlag+' make install -j8)')
 
-    if raliInstall == 'yes':
+    if raliInstall == 'yes' and backend != 'CPU':
         # RPP
         if os.path.exists(deps_dir+'/rpp/build-'+backend):
             os.system('sudo -v')
             os.system('(cd '+deps_dir+'/rpp/build-'+backend+'; sudo ' +
                       linuxFlag+' make install -j8)')
 
-    if ffmpegInstall == 'yes':
+    if ffmpegInstall == 'yes' and backend != 'CPU':
         # FFMPEG
         if os.path.exists(deps_dir+'/FFmpeg-n4.0.4'):
             os.system('sudo -v')
@@ -238,25 +228,16 @@ else:
     os.system(
         '(cd '+deps_dir+'; wget https://github.com/opencv/opencv/archive/'+opencvVersion+'.zip )')
     os.system('(cd '+deps_dir+'; unzip '+opencvVersion+'.zip )')
-    if neuralNetInstall == 'yes':
-        os.system(
-            '(cd '+deps_dir+'; git clone -b rocm-4.2.0 https://github.com/RadeonOpenCompute/rocm-cmake.git )')
-        os.system(
-            '(cd '+deps_dir+'; wget https://github.com/ROCmSoftwarePlatform/MIOpenGEMM/archive/'+MIOpenGEMMVersion+'.zip )')
-        os.system('(cd '+deps_dir+'; unzip '+MIOpenGEMMVersion+'.zip )')
-        os.system(
-            '(cd '+deps_dir+'; wget https://github.com/ROCmSoftwarePlatform/MIOpen/archive/'+MIOpenVersion+'.zip )')
-        os.system('(cd '+deps_dir+'; unzip '+MIOpenVersion+'.zip )')
-    if raliInstall == 'yes' or neuralNetInstall == 'yes':
+    if (raliInstall == 'yes' or neuralNetInstall == 'yes') and backend != 'CPU':
         os.system(
             '(cd '+deps_dir+'; wget https://github.com/protocolbuffers/protobuf/archive/v'+ProtoBufVersion+'.zip )')
         os.system('(cd '+deps_dir+'; unzip v'+ProtoBufVersion+'.zip )')
-    if ffmpegInstall == 'yes':
+    if ffmpegInstall == 'yes' and backend != 'CPU':
         os.system(
             '(cd '+deps_dir+'; wget https://github.com/FFmpeg/FFmpeg/archive/refs/tags/n4.0.4.zip && unzip n4.0.4.zip )')
 
     # Install
-    if raliInstall == 'yes' or neuralNetInstall == 'yes':
+    if (raliInstall == 'yes' or neuralNetInstall == 'yes') and backend != 'CPU':
         # package dependencies
         os.system('sudo -v')
         if "centos" in platfromInfo or "redhat" in platfromInfo:
@@ -312,49 +293,24 @@ else:
         os.system('(cd '+deps_dir+'/protobuf-'+ProtoBufVersion +
                   '; sudo '+linuxFlag+' ldconfig )')
 
-    if neuralNetInstall == 'yes':
+    if neuralNetInstall == 'yes' and backend != 'CPU':
         # Remove Previous Install - MIOpen
         os.system('sudo -v')
         if os.path.exists(ROCM_PATH+'/miopen'):
             os.system('sudo rm -rf '+ROCM_PATH+'/miopen*')
 
         if backend == 'OCL':
+            os.system('sudo -v')
             os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' ' +
-                      linuxSystemInstall_check+' remove miopen-hip')
-        else:
-            os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' ' +
-                      linuxSystemInstall_check+' remove miopen-opencl')
-
-        os.system(
-            '(cd '+deps_dir+'/build; mkdir rocm-cmake MIOpenGEMM MIOpen-'+backend+')')
-        # Install ROCm-CMake
-        os.system('(cd '+deps_dir+'/build/rocm-cmake; ' +
-                  linuxCMake+' ../../rocm-cmake )')
-        os.system('(cd '+deps_dir+'/build/rocm-cmake; make -j8 )')
-        os.system('(cd '+deps_dir+'/build/rocm-cmake; sudo ' +
-                  linuxFlag+' make install )')
-        if backend == 'OCL':
-            # Install MIOpenGEMM
-            os.system('(cd '+deps_dir+'/build/MIOpenGEMM; '+linuxCMake +
-                      ' ../../MIOpenGEMM-'+MIOpenGEMMVersion+' )')
-            os.system('(cd '+deps_dir+'/build/MIOpenGEMM; make -j8 )')
-            os.system('(cd '+deps_dir+'/build/MIOpenGEMM; sudo ' +
-                      linuxFlag+' make install )')
-        # Install MIOpen
-        os.system('(cd '+deps_dir+'/MIOpen-'+MIOpenVersion+'; sudo ' +
-                  linuxFlag+' '+linuxCMake+' -P install_deps.cmake --minimum )')
-        if backend == 'OCL':
-            os.system('(cd '+deps_dir+'/build/MIOpen-'+backend+'; '+linuxCMake +
-                      ' -DMIOPEN_BACKEND=OpenCL -DMIOPEN_USE_MIOPENGEMM=On ../../MIOpen-'+MIOpenVersion+' )')
+                      linuxSystemInstall_check+' autoremove -y miopen-hip migraphx')
+            os.system('sudo '+linuxFlag+' '+linuxSystemInstall +
+                      ' '+linuxSystemInstall_check+' install -y miopen-opencl')
         else:
             os.system('sudo -v')
+            os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' ' +
+                      linuxSystemInstall_check+' autoremove -y miopen-opencl')
             os.system('sudo '+linuxFlag+' '+linuxSystemInstall +
-                      ' '+linuxSystemInstall_check+' install rocblas')
-            os.system('(cd '+deps_dir+'/build/MIOpen-'+backend+'; CXX=/opt/rocm/llvm/bin/clang++ '+linuxCMake +
-                      ' -DMIOPEN_BACKEND=HIP ../../MIOpen-'+MIOpenVersion+' )')
-        os.system('(cd '+deps_dir+'/build/MIOpen-'+backend+'; make -j8 )')
-        os.system('(cd '+deps_dir+'/build/MIOpen-'+backend+'; sudo ' +
-                  linuxFlag+' make install )')
+                      ' '+linuxSystemInstall_check+' install -y miopen-hip migraphx')
 
         # Install Packages for NN Apps - Apps Requirement to be installed by Developer
         # os.system('sudo ' + linuxFlag+' '+linuxSystemInstall+' autoremove ')
@@ -408,7 +364,7 @@ else:
     os.system('sudo -v')
     os.system('(cd '+deps_dir+'/build/OpenCV; sudo '+linuxFlag+' ldconfig )')
 
-    if raliInstall == 'yes':
+    if raliInstall == 'yes' and backend != 'CPU':
         # Install RPP
         if "Ubuntu" in platfromInfo:
             # Install Packages for rocAL
@@ -464,7 +420,7 @@ else:
             # os.system('(cd '+deps_dir+'; git clone -b '+rppVersion+' https://github.com/GPUOpen-ProfessionalCompute-Libraries/rpp.git; cd rpp; mkdir build; cd build; '+linuxCMake+' -DBACKEND=OCL ../; make -j4; sudo make install)')
 
     # Install ffmpeg
-    if ffmpegInstall == 'yes':
+    if ffmpegInstall == 'yes' and backend != 'CPU':
         if "Ubuntu" in platfromInfo:
             os.system('sudo -v')
             os.system('sudo '+linuxFlag+' '+linuxSystemInstall+' '+linuxSystemInstall_check +
