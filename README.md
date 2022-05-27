@@ -10,10 +10,10 @@ For convenience of the developer, we here provide the scripts which will install
 ## Prerequisites for running the script
 
 * Linux distribution
-  * Ubuntu `18.04` / `20.04` 
-  * CentOS `7`/ `8`
-* [ROCm supported hardware](https://rocm.github.io/hardware.html)
-* [ROCm](https://github.com/RadeonOpenCompute/ROCm#installing-from-amd-rocm-repositories)
+  + Ubuntu - `18.04` / `20.04`
+  + CentOS - `7` / `8`
+* [ROCm supported hardware](https://docs.amd.com)
+* [ROCm](https://docs.amd.com)
 
 ## scripts 
 
@@ -23,20 +23,21 @@ This folder has the following python scripts
 
 **usage:**
 
-  ``` 
-  python3 MIVisionX-setup.py --directory [setup directory - optional (default:~/)]
-                             --opencv    [OpenCV Version - optional (default:3.4.0)]
-                             --miopen    [MIOpen Version - optional (default:2.11.0)]
-                             --miopengemm[MIOpenGEMM Version - optional (default:1.1.5)]
-                             --protobuf  [ProtoBuf Version - optional (default:3.12.0)]
-                             --rpp       [RPP Version - optional (default:0.7)]
-                             --ffmpeg    [FFMPEG Installation - optional (default:no) [options:yes/no]]
-                             --rocal     [MIVisionX rocAL Dependency Install - optional (default:yes) [options:yes/no]]
-                             --neural_net[MIVisionX Neural Net Dependency Install - optional (default:yes) [options:yes/no]]
-                             --reinstall [Remove previous setup and reinstall (default:no)[options:yes/no]]
-                             --backend   [MIVisionX Dependency Backend - optional (default:OCL) [options:OCL/HIP]]
-                             --rocm_path [ROCm Installation Path - optional (default:/opt/rocm) - ROCm Installation Required]
   ```
+  python3 MIVisionX-setup.py --directory [setup directory - optional (default:~/)]
+                            --opencv    [OpenCV Version - optional (default:4.5.5)]
+                            --protobuf  [ProtoBuf Version - optional (default:3.12.0)]
+                            --rpp       [RPP Version - optional (default:0.91)]
+                            --ffmpeg    [FFMPEG V4.0.4 Installation - optional (default:no) [options:yes/no]]
+                            --rocal     [MIVisionX rocAL Dependency Install - optional (default:yes) [options:yes/no]]
+                            --neural_net[MIVisionX Neural Net Dependency Install - optional (default:yes) [options:yes/no]]
+                            --reinstall [Remove previous setup and reinstall (default:no)[options:yes/no]]
+                            --backend   [MIVisionX Dependency Backend - optional (default:HIP) [options:OCL/HIP]]
+                            --rocm_path [ROCm Installation Path - optional (default:/opt/rocm) - ROCm Installation Required]
+  ```
+  **Note:**
+  * **ROCm upgrade** with `sudo apt upgrade` requires the setup script **rerun**.
+  * use `X Window` / `X11` for [remote GUI app control](https://github.com/GPUOpen-ProfessionalCompute-Libraries/MIVisionX/wiki/X-Window-forwarding)
 
 
 **MIVisionX-build.py** - This script clones the latest MIVisionX from GitHub, builds and installs the project. If the -d build directory is not given the script creates a MIVisionX folder in the home/'~/' directory by default, else in the user-specified folder.
